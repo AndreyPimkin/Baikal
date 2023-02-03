@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="680.0" stylesheets="@../../../CSS/Style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.Admin">
+  <tabs>
+    <Tab text="Доставки">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="cargo" layoutX="25.0" layoutY="25.0" prefHeight="315.0" prefWidth="630.0">
+                    <columns>
+                      <TableColumn fx:id="idClient" prefWidth="90.0" text="ID Клиента" />
+                      <TableColumn fx:id="numberCargo" prefWidth="199.0" text="Номер груза" />
+                        <TableColumn fx:id="from" prefWidth="88.0" text="Откуда" />
+                        <TableColumn fx:id="to" prefWidth="116.0" text="Куда" />
+                        <TableColumn fx:id="sent" prefWidth="139.0" text="Отправлено" />
+                    </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </content>
+    </Tab>
+      <Tab text="Клиенты">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="client" layoutX="25.0" layoutY="25.0" prefHeight="315.0" prefWidth="630.0">
+                     <columns>
+                        <TableColumn fx:id="idClientClient" prefWidth="90.0" text="ID Клиента" />
+                        <TableColumn fx:id="fullnameClient" prefWidth="250.0" text="ФИО" />
+                        <TableColumn fx:id="cityTwo" prefWidth="110.0" text="Город" />
+                        <TableColumn fx:id="numberClient" prefWidth="182.0" text="Номер телефона" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </content>
+      </Tab>
+      <Tab text="Работники">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="person" layoutX="25.0" layoutY="25.0" prefHeight="315.0" prefWidth="630.0">
+                     <columns>
+                        <TableColumn fx:id="idPerson" prefWidth="98.0" text="ID Работника" />
+                        <TableColumn fx:id="fullnamePerson" prefWidth="246.0" text="ФИО" />
+                        <TableColumn fx:id="birthday" prefWidth="133.0" text="День рождение" />
+                        <TableColumn fx:id="role" prefWidth="103.0" text="Роль" />
+                        <TableColumn fx:id="numberPerson" prefWidth="100.0" text="Номер телефона" />
+                        <TableColumn fx:id="password" prefWidth="100.0" text="Пароль" />
+                        <TableColumn fx:id="dateDoc" prefWidth="150.0" text="Дата выдачи документа" />
+                        <TableColumn fx:id="numberDoc" prefWidth="120.0" text="Номер документа" />
+                        <TableColumn fx:id="city" prefWidth="70.0" text="Город" />
+                        <TableColumn fx:id="exp" prefWidth="70.0" text="Стаж" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </content>
+      </Tab>
+      <Tab text="Изменение работников">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="idPersonAdd" layoutX="21.0" layoutY="48.0" prefHeight="35.0" prefWidth="65.0" promptText="ID" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="fullnamePersonAdd" layoutX="101.0" layoutY="48.0" prefHeight="35.0" prefWidth="385.0" promptText="ФИО" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="numberPersonAdd" layoutX="21.0" layoutY="163.0" prefHeight="35.0" prefWidth="225.0" promptText="Номер телефона" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <DatePicker fx:id="datePas" layoutX="21.0" layoutY="222.0" prefHeight="35.0" prefWidth="225.0" promptText="Дата выдачи" style="-fx-background-color: #19b2e6;" styleClass="dateDoc" />
+                  <ComboBox fx:id="boxCity" layoutX="21.0" layoutY="285.0" prefHeight="35.0" prefWidth="225.0" promptText="Город" style="-fx-border-color: #19b2e6; -fx-background-color: none;" styleClass="city" />
+                  <TextField fx:id="numberPas" layoutX="261.0" layoutY="222.0" prefHeight="35.0" prefWidth="225.0" promptText="Серия и номер паспорта" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <DatePicker fx:id="birthdayPersonAdd" layoutX="21.0" layoutY="106.0" prefHeight="35.0" prefWidth="225.0" promptText="День рождения" style="-fx-background-color: #19b2e6;" styleClass="birt" />
+                  <ComboBox fx:id="boxRole" layoutX="261.0" layoutY="106.0" prefHeight="35.0" prefWidth="225.0" promptText="Роль" style="-fx-border-color: #19b2e6; -fx-background-color: none;" styleClass="city" />
+                  <TextField fx:id="passwordPersonAdd" layoutX="261.0" layoutY="163.0" prefHeight="35.0" prefWidth="225.0" promptText="Пароль" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="expAdd" layoutX="260.0" layoutY="285.0" prefHeight="35.0" prefWidth="227.0" promptText="Стаж" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="add" layoutX="523.0" layoutY="222.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: black;" text="Добавить" textFill="WHITE">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="delete" layoutX="523.0" layoutY="285.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: black;" text="Удалить" textFill="WHITE">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </content>
+      </Tab>
+      <Tab text="Транспорт">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="car" layoutX="25.0" layoutY="25.0" prefHeight="200.0" prefWidth="444.0">
+                    <columns>
+                      <TableColumn fx:id="number" prefWidth="75.0" text="Номер" />
+                      <TableColumn fx:id="model" prefWidth="75.0" text="Модель" />
+                        <TableColumn fx:id="status" prefWidth="75.0" text="Статус" />
+                        <TableColumn fx:id="vin" prefWidth="75.0" text="VIN" />
+                        <TableColumn fx:id="load" prefWidth="143.0" text="Грузоподъемность" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="numberCarAdd" layoutX="25.0" layoutY="239.0" prefHeight="35.0" prefWidth="151.0" promptText="Номер" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="modelAdd" layoutX="189.0" layoutY="239.0" prefHeight="35.0" prefWidth="276.0" promptText="Модель" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="vinAdd" layoutX="25.0" layoutY="297.0" prefHeight="35.0" prefWidth="151.0" promptText="VIN" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="loadAdd" layoutX="189.0" layoutY="297.0" prefHeight="35.0" prefWidth="276.0" promptText="Грузоподъемность" style="-fx-border-color: #19b2e6;">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="addCar" layoutX="524.0" layoutY="239.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: black;" text="Добавить" textFill="WHITE">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="deleteCar" layoutX="524.0" layoutY="297.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: black;" text="Удалить" textFill="WHITE">
+                     <font>
+                        <Font name="Century" size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

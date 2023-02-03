@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="550.0" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.Driver">
+   <children>
+      <TableView fx:id="tableLogist" layoutX="25.0" layoutY="30.0" prefHeight="270.0" prefWidth="500.0">
+         <columns>
+            <TableColumn fx:id="number" minWidth="6.0" prefWidth="117.0" text="Номер груза" />
+            <TableColumn fx:id="ves" minWidth="6.0" prefWidth="79.0" text="Вес" />
+            <TableColumn fx:id="ob" minWidth="6.0" prefWidth="93.0" text="Объем" />
+            <TableColumn fx:id="from" minWidth="6.0" prefWidth="91.0" text="Откуда" />
+            <TableColumn fx:id="to" minWidth="6.0" prefWidth="115.0" text="Куда" />
+         </columns>
+      </TableView>
+   </children>
+</Pane>

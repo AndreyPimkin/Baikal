@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.Info">
+   <children>
+      <TableView fx:id="cargoTable" layoutX="31.0" layoutY="111.0" prefHeight="249.0" prefWidth="541.0">
+        <columns>
+          <TableColumn fx:id="number" prefWidth="198.0" text="Номер доставки" />
+          <TableColumn fx:id="status" prefWidth="75.0" text="Статус" />
+            <TableColumn fx:id="sent" prefWidth="130.0" text="Отправлен" />
+            <TableColumn fx:id="deliv" prefWidth="137.0" text="Доставлен" />
+        </columns>
+      </TableView>
+      <Button fx:id="person" layoutX="405.0" layoutY="27.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Личный кабинет" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="imageCon" fitHeight="55.0" fitWidth="65.0" layoutX="325.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="imageC">
+         <image>
+            <Image url="@../../../picture/treaty.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
