@@ -1,6 +1,6 @@
 package penza.shandakov.baikal.server;
 
-import penza.shandakov.baikal.Authorization;
+import penza.shandakov.baikal.AuthorizationController;
 import penza.shandakov.baikal.POJO.ForCar;
 import penza.shandakov.baikal.POJO.ForCargo;
 import penza.shandakov.baikal.POJO.ForClient;
@@ -26,6 +26,33 @@ public class DatabaseHandler {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             prSt.setString(1, forClient.getPhone());
             prSt.setString(2, forClient.getPassword());
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet checkInfoClient(ForClient forClient) {
+        ResultSet resSet = null;
+        String select = "SELECT fullname, birthday FROM client WHERE id_client = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forClient.getId());
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet getInfoClient(ForClient forClient) {
+        ResultSet resSet = null;
+        String select = "SELECT client.fullname, city.name FROM client " +
+                "INNER JOIN city ON client.city = city.id_city WHERE id_client = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forClient.getId());
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -61,25 +88,41 @@ public class DatabaseHandler {
 
     public void updateClient(ForClient forClient) throws SQLException, ClassNotFoundException {
         String insert = "UPDATE client SET " +
-                "fullname = (? + ' '+ ? + ' ' + ?), " +
+                "fullname = (? + ' ' + ?), " +
                 "birthday = ?, " +
-                "date_doc = ?, " +
-                "number_doc = ?, " +
-                "city = ? WHERE id_client = " + Authorization.id;
+                "city = ? WHERE id_client = ?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forClient.getSurname());
             prSt.setString(2, forClient.getName());
-            prSt.setString(3, forClient.getPat());
-            prSt.setString(4, forClient.getDay());
-            prSt.setString(5, forClient.getDateDoc());
-            prSt.setString(6, forClient.getNumberDoc());
-            prSt.setString(7, forClient.getCity());
+            prSt.setString(3, forClient.getPatronymic());
+            prSt.setString(4, forClient.getBirthday());
+            prSt.setString(5, forClient.getId());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    public void updateClientFull(ForClient forClient) throws SQLException, ClassNotFoundException {
+        String insert = "UPDATE client SET " +
+                "fullname = (? + ' ' + ? + ' ' + ?), " +
+                "birthday = ?, " +
+                "city = (SELECT id_city FROM city WHERE name = ?) WHERE id_client = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forClient.getSurname());
+            prSt.setString(2, forClient.getName());
+            prSt.setString(3, forClient.getPatronymic());
+            prSt.setString(4, forClient.getBirthday());
+            prSt.setString(5, forClient.getCity());
+            prSt.setString(6, forClient.getId());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void addCargo(ForCargo forCargo) throws SQLException, ClassNotFoundException {
         String insert = "INSERT INTO cargo(number_cargo,id_client, description, length, width, height, size, weight, " +
@@ -111,7 +154,7 @@ public class DatabaseHandler {
         ResultSet resSet = null;
         String select = "SELECT cargo.number_cargo, book_delivery.status,  book_delivery.sent, book_delivery.delivered " +
                 "FROM cargo INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
-                "WHERE cargo.id_client = " + Authorization.id;
+                "WHERE cargo.id_client = " + AuthorizationController.id;
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
@@ -144,6 +187,41 @@ public class DatabaseHandler {
         }
         return resSet;
     }
+
+    public ResultSet getCity() {
+        ResultSet resSet = null;
+        String select = "SELECT name FROM city";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+
+    public ResultSet getDistanceCity(ForClient forClient) {
+        ResultSet resSet = null;
+        String select = "SELECT distance FROM " +
+                "rate AS r " +
+                "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
+                "INNER JOIN city AS c2 ON r.city_to = c2.id_city " +
+                "WHERE c1.name = ? AND c2.name = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forClient.getCityFrom());
+            prSt.setString(2, forClient.getCityTo());
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+
+
+
 
     public ResultSet getBook() {
         ResultSet resSet = null;
@@ -188,7 +266,7 @@ public class DatabaseHandler {
         String select = "SELECT cargo.number_cargo, cargo.weight, cargo.size, cargo.city_from, " +
                 "cargo.city_to from cargo " +
                 "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
-                "WHERE book_delivery.status = 'Сформирован' AND  id_personal = " + Authorization.idPerson;
+                "WHERE book_delivery.status = 'Сформирован' AND  id_personal = " + AuthorizationController.idPerson;
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
@@ -269,15 +347,15 @@ public class DatabaseHandler {
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forClient.getId());
-            prSt.setString(2, forClient.getFullname());
-            prSt.setString(3, forClient.getDay());
+            prSt.setString(2, forClient.getFullName());
+            prSt.setString(3, forClient.getBirthday());
             prSt.setString(4, forClient.getRole());
             prSt.setString(5, forClient.getPhone());
             prSt.setString(6, forClient.getPassword());
             prSt.setString(7, forClient.getDateDoc());
             prSt.setString(8, forClient.getNumberDoc());
             prSt.setString(9, forClient.getCity());
-            prSt.setString(10, forClient.getPat());
+            prSt.setString(10, forClient.getPatronymic());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -300,6 +378,44 @@ public class DatabaseHandler {
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forClient.getId());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public ResultSet checkPhoneClient(ForClient forClient) {
+        ResultSet resSet = null;
+        String select = "SELECT * FROM client WHERE phone =  ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forClient.getPhone());
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public void changePassword(ForClient forClient) throws ClassNotFoundException {
+        String insert = "UPDATE client SET password = ? WHERE phone = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forClient.getPassword());
+            prSt.setString(2, forClient.getPhone());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changePasswordTwo(ForClient forClient) throws ClassNotFoundException {
+        String insert = "UPDATE client SET password = ? WHERE id_client = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forClient.getPassword());
+            prSt.setString(2, forClient.getId());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

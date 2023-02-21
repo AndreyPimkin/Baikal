@@ -154,15 +154,15 @@ public class Admin {
         add.setOnAction(actionEvent -> {
             ForClient forClient = new ForClient();
             forClient.setId(idPersonAdd.getText());
-            forClient.setFullname(fullnamePersonAdd.getText());
-            forClient.setDay(String.valueOf(birthdayPersonAdd.getValue()));
+            forClient.setFullName(fullnamePersonAdd.getText());
+            forClient.setBirthday(String.valueOf(birthdayPersonAdd.getValue()));
             forClient.setRole(selectRole);
             forClient.setPhone(numberPersonAdd.getText());
             forClient.setPassword(passwordPersonAdd.getText());
             forClient.setDateDoc(String.valueOf(datePas.getValue()));
             forClient.setNumberDoc(numberPas.getText());
             forClient.setCity(selectCity);
-            forClient.setPat(expAdd.getText());
+            forClient.setPatronymic(expAdd.getText());
             try {
                 dbHandler.addPerson(forClient);
             } catch (ClassNotFoundException e) {

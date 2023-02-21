@@ -8,6 +8,12 @@
     -fx-text-fill:  #19b2e6;
 }
 
+.panePersonalAccount:hover{
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-border-color:#19b2e6;
+}
+
 .button{
     -fx-text-fill: white;
 }
@@ -57,7 +63,7 @@
     -fx-font-size: 16;
 }
 
-.dateDoc{
+.datePicker{
     -fx-font-size: 16;
 }
 

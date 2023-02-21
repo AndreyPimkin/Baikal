@@ -44,9 +44,9 @@ public class Cargo {
     @FXML
     void initialize() {
         ob.setDisable(true);
-        ob.setText(String.format("%.2f",Client.ob));
-        ves.setText(String.format("%.2f",Client.ves));
-        price.setText(String.format("%.2f",Client.total));
+        ob.setText(String.format("%.2f", MainController.size));
+        ves.setText(String.format("%.2f", MainController.weight));
+        price.setText(String.format("%.2f", MainController.total));
 
         boxFrom.getItems().addAll(this.listCity);
         boxTo.getItems().addAll(this.listCity);
@@ -56,7 +56,7 @@ public class Cargo {
         box .setOnAction(this::getBox);
 
         person.setOnAction(actionEvent -> {
-            openWindow("/penza/shandakov/baikal/person.fxml", person, "Личный кабинет");
+            openWindow("/penza/shandakov/baikal/personalAccount.fxml", person, "Личный кабинет");
         });
 
         imageInfo.setOnMouseClicked(mouseEvent -> {
@@ -66,26 +66,26 @@ public class Cargo {
         // метод подсчета
 
         itog.setOnAction(actionEvent -> {
-            Client.ves = Float.parseFloat(ves.getText());
-            Client.ob = Float.parseFloat(dlina.getText()) * Float.parseFloat(vis.getText()) *  Float.parseFloat(shir.getText());
-            p = (Client.ves /Client.ob);
+            MainController.weight = Float.parseFloat(ves.getText());
+            MainController.size = Float.parseFloat(dlina.getText()) * Float.parseFloat(vis.getText()) *  Float.parseFloat(shir.getText());
+            p = (MainController.weight / MainController.size);
             if(selectCityFrom.equals(selectCityTo)){
                 if(p > 250){
-                    Client.total  = Client.ves * 2;
+                    MainController.total  = MainController.weight * 2;
                 }
                 else {
-                    Client.total = (int) (Client.ves * 1.5);
+                    MainController.total = (int) (MainController.weight * 1.5);
                 }
             }
             else{
                 if(p > 250){
-                    Client.total  = Client.ves * 3;
+                    MainController.total  = MainController.weight * 3;
                 }
                 else {
-                    Client.total = (int) (Client.ves * 2);
+                    MainController.total = (int) (MainController.weight * 2);
                 }
             }
-            price.setText("от "+ String.format("%.2f",Client.total) + " ₽");
+            price.setText("от "+ String.format("%.2f", MainController.total) + " ₽");
 
         });
 
@@ -95,14 +95,14 @@ public class Cargo {
             number = generateNumber();
             ForCargo forCargo = new ForCargo();
             forCargo.setNumber(number);
-            forCargo.setId_client(String.valueOf(Authorization.id));
+            forCargo.setId_client(String.valueOf(AuthorizationController.id));
             forCargo.setDesc(opis.getText());
             forCargo.setLen(dlina.getText());
             forCargo.setWid(shir.getText());
             forCargo.setHei(vis.getText());
-            forCargo.setSize(String.valueOf(Client.ob));
-            forCargo.setWei(String.valueOf(Client.ves));
-            forCargo.setPrice(String.valueOf(Client.total));
+            forCargo.setSize(String.valueOf(MainController.size));
+            forCargo.setWei(String.valueOf(MainController.weight));
+            forCargo.setPrice(String.valueOf(MainController.total));
             forCargo.setPack(selectBox);
             forCargo.setCity_from(selectCityFrom);
             forCargo.setCity_to(selectCityTo);

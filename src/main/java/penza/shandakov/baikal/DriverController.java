@@ -12,7 +12,7 @@ import penza.shandakov.baikal.server.DatabaseHandler;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Driver {
+public class DriverController {
 
     @FXML private TableColumn<ForLogist, String> from;
     @FXML private TableColumn<ForLogist, String> number;

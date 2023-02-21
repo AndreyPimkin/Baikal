@@ -57,7 +57,7 @@ public class Info {
 
         // откроет окно  личного кабинета
         person.setOnAction(actionEvent -> {
-            openWindow("/penza/shandakov/baikal/person.fxml", person, "Личный кабинет");
+            openWindow("/penza/shandakov/baikal/personalAccount.fxml", person, "Личный кабинет");
         });
 
 

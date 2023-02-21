@@ -3,36 +3,55 @@ package penza.shandakov.baikal.POJO;
 public class ForClient {
     private String phone;
     private String password;
-
     private String surname;
     private String name;
-    private String pat;
+    private String patronymic;
     private String city;
     private String numberDoc;
     private String dateDoc;
-    private String day;
+    private String birthday;
     private String id;
-    private String fullname;
+    private String fullName;
+
+    private String cityFrom;
+    private String cityTo;
+
+
+    public String getCityFrom() {
+        return cityFrom;
+    }
+
+    public void setCityFrom(String cityFrom) {
+        this.cityFrom = cityFrom;
+    }
+
+    public String getCityTo() {
+        return cityTo;
+    }
+
+    public void setCityTo(String cityTo) {
+        this.cityTo = cityTo;
+    }
 
     private String role;
 
-    public ForClient(String id, String fullname, String city, String phone) {
+    public ForClient(String id, String fullName, String city, String phone) {
         this.id = id;
-        this.fullname = fullname;
+        this.fullName = fullName;
         this.city = city;
         this.phone = phone;
     }
 
-    public ForClient(String id, String fullname, String day, String role, String phone, String password, String dateDoc, String numberDoc, String city, String pat) {
+    public ForClient(String id, String fullName, String birthday, String role, String phone, String password, String dateDoc, String numberDoc, String city, String patronymic) {
         this.phone = phone;
         this.password = password;
-        this.pat = pat;
+        this.patronymic = patronymic;
         this.city = city;
         this.numberDoc = numberDoc;
         this.dateDoc = dateDoc;
-        this.day = day;
+        this.birthday = birthday;
         this.id = id;
-        this.fullname = fullname;
+        this.fullName = fullName;
         this.role = role;
     }
 
@@ -48,12 +67,12 @@ public class ForClient {
         this.role = role;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getId() {
@@ -80,12 +99,12 @@ public class ForClient {
         this.name = name;
     }
 
-    public String getPat() {
-        return pat;
+    public String getPatronymic() {
+        return patronymic;
     }
 
-    public void setPat(String pat) {
-        this.pat = pat;
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
     }
 
     public String getCity() {
@@ -112,12 +131,12 @@ public class ForClient {
         this.dateDoc = dateDoc;
     }
 
-    public String getDay() {
-        return day;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getPhone() {

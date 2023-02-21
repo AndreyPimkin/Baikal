@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import penza.shandakov.baikal.POJO.ForClient;
 import penza.shandakov.baikal.server.DatabaseHandler;
@@ -42,7 +41,7 @@ public class Reg {
                         } catch (SQLException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
-                        openWindow("/penza/shandakov/baikal/main.fxml", buttonReg, "Авторизация");
+                        openWindow("/penza/shandakov/baikal/authorization.fxml", buttonReg, "Авторизация");
 
 
                     } else {

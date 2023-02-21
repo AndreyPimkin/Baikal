@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" style="-fx-background-color: white;" styleClass="paneClient" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.Client">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" style="-fx-background-color: white;" styleClass="paneClient" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.Client">
    <children>
       <Label layoutX="25.0" layoutY="165.0" prefHeight="21.0" prefWidth="271.0" text="Калькулятор грузоперевозки">
          <font>
@@ -46,7 +46,7 @@
             <Image url="@../../../picture/calc.png" />
          </image>
       </ImageView>
-      <Label fx:id="price" layoutX="71.0" layoutY="475.0" prefHeight="21.0" prefWidth="101.0" text="от 1000 ₽ ">
+      <Label fx:id="price" layoutX="71.0" layoutY="475.0" prefHeight="21.0" prefWidth="250.0" text="от 1000 ₽ ">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
@@ -56,7 +56,7 @@
             <Font name="Arial Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="person" layoutX="394.0" layoutY="35.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Личный кабинет" textFill="WHITE">
+      <Button fx:id="buttonOpenPesonalAccount" layoutX="394.0" layoutY="35.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Личный кабинет" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
