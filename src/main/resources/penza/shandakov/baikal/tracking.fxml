@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#mouseClick" prefHeight="450.0" prefWidth="550.0" style="-fx-background-color: white;" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.TrackingController">
+   <children>
+      <Button fx:id="backButton" layoutX="451.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="85.0" style="-fx-background-color: black;" styleClass="buttonLC" text="Назад" textFill="WHITE">
+         <font>
+            <Font name="Century" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="searchButton" layoutX="30.0" layoutY="405.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" style="-fx-background-color: black;" styleClass="buttonLC" text="Поиск" textFill="WHITE">
+         <font>
+            <Font name="Century" size="14.0" />
+         </font>
+      </Button>
+      <TextField fx:id="inputNumber" layoutX="30.0" layoutY="362.0" onMouseClicked="#mouseClick" prefHeight="30.0" prefWidth="200.0" promptText="Номер груза" style="-fx-border-color: black; -fx-background-color: none;">
+         <font>
+            <Font name="Century" size="16.0" />
+         </font>
+      </TextField>
+      <Button fx:id="clearButton" layoutX="145.0" layoutY="405.0" mnemonicParsing="false" onMouseClicked="#mouseClick" prefHeight="20.0" prefWidth="85.0" style="-fx-background-color: black;" styleClass="buttonLC" text="Очистить" textFill="WHITE">
+         <font>
+            <Font name="Century" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="30.0" layoutY="50.0" prefHeight="8.0" prefWidth="155.0" styleClass="infoTexts" text="Размеры груза:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="90.0" prefHeight="0.0" prefWidth="115.0" styleClass="infoTexts" text="Объем груза:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="130.0" prefHeight="23.0" prefWidth="103.0" styleClass="infoTexts" text="Вес груза:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="170.0" prefHeight="15.0" prefWidth="115.0" styleClass="infoTexts" text="Упаковка:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="210.0" prefHeight="23.0" prefWidth="115.0" styleClass="infoTexts" text="Стоимость:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="250.0" prefHeight="0.0" prefWidth="125.0" styleClass="infoTexts" text="Статус:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="290.0" prefHeight="23.0" prefWidth="168.0" styleClass="infoTexts" text="Время доставки:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="fromSent" layoutX="258.0" layoutY="367.0" prefHeight="23.0" prefWidth="134.0" text="Отправлен:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="toSent" layoutX="261.0" layoutY="397.0" prefHeight="45.0" prefWidth="115.0" text="Доставлен:" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="options" layoutX="185.0" layoutY="50.0" onZoomFinished="#initialize" prefHeight="8.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="size" layoutX="185.0" layoutY="90.0" prefHeight="8.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="weight" layoutX="185.0" layoutY="130.0" prefHeight="23.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="packing" layoutX="185.0" layoutY="170.0" prefHeight="23.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="price" layoutX="185.0" layoutY="210.0" prefHeight="23.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="status" layoutX="185.0" layoutY="250.0" prefHeight="23.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeDelivery" layoutX="185.0" layoutY="290.0" prefHeight="23.0" prefWidth="225.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateAndCityFromSent" layoutX="374.0" layoutY="367.0" prefHeight="23.0" prefWidth="170.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateAndCityToSent" layoutX="374.0" layoutY="408.0" prefHeight="23.0" prefWidth="170.0" wrapText="true">
+         <font>
+            <Font name="Century" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorInput" alignment="CENTER" layoutX="40.0" layoutY="338.0" minWidth="180.0" prefHeight="14.0" prefWidth="180.0" text="Не найден" textFill="RED">
+         <font>
+            <Font name="Century" size="11.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="errorImage" fitHeight="44.0" fitWidth="157.0" layoutX="70.0" layoutY="380.0" onMouseClicked="#mouseClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../picture/error.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

@@ -60,7 +60,7 @@ public class Cargo {
         });
 
         imageInfo.setOnMouseClicked(mouseEvent -> {
-            openWindow("/penza/shandakov/baikal/info.fxml", buttonGo, "Отслеживание");
+            openWindow("/penza/shandakov/baikal/tracking.fxml", buttonGo, "Отслеживание");
         });
 
         // метод подсчета
@@ -91,7 +91,7 @@ public class Cargo {
 
         // метод добавления груза
 
-        buttonGo.setOnAction(actionEvent -> {
+  /*      buttonGo.setOnAction(actionEvent -> {
             number = generateNumber();
             ForCargo forCargo = new ForCargo();
             forCargo.setNumber(number);
@@ -116,7 +116,7 @@ public class Cargo {
                 throw new RuntimeException(e);
             }
         });
-
+*/
 
 
 

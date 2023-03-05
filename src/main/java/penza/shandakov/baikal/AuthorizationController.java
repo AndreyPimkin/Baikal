@@ -63,7 +63,7 @@ public class AuthorizationController {
 
         // слушатель на кнопку регистрации. Откроет окно регистрации
         buttonOpenReg.setOnAction(actionEvent -> {
-            openWindow("/penza/shandakov/baikal/reg.fxml", buttonOpenReg, "Регистрация");
+            openWindow("/penza/shandakov/baikal/registration.fxml", buttonOpenReg, "Регистрация");
         });
 
         // Откроет окно смены пароля

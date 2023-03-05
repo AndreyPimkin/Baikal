@@ -333,7 +333,7 @@ public class PersonalAccountController {
         });
         // кнопка для открытия отслеживания
         imageTracking.setOnMouseClicked(mouseEvent -> {
-            AuthorizationController.openWindow("/penza/shandakov/baikal/info.fxml", buttonBack, "Отслеживание");
+            AuthorizationController.openWindow("/penza/shandakov/baikal/tracking.fxml", buttonBack, "Отслеживание");
         });
     }
 

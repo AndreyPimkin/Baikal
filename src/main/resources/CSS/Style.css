@@ -28,16 +28,39 @@
     -fx-underline: true;
 }
 
+
+.infoTexts{
+    -fx-text-fill: gray;
+    -fx-underline: true;
+}
+
+
+
 .buttonLC:hover{
     -fx-text-fill: white;
     -fx-scale-y: 1.01;
     -fx-scale-x: 1.01;
 }
+
+.buttonLC:pressed{
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
+
+
 .buttonGO:hover{
     -fx-text-fill: white;
     -fx-scale-y: 1.01;
     -fx-scale-x: 1.01;
 }
+
+
+.buttonGO:pressed{
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
+
+
 .imageC:hover{
     -fx-scale-y: 1.05;
     -fx-scale-x: 1.05;
@@ -45,6 +68,15 @@
 .imageS:hover{
     -fx-scale-y: 1.05;
     -fx-scale-x: 1.05;
+}
+
+.imageC:pressed{
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
+.imageS:pressed{
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
 }
 
 .boxFrom{

@@ -124,7 +124,7 @@ public class DatabaseHandler {
     }
 
 
-    public void addCargo(ForCargo forCargo) throws SQLException, ClassNotFoundException {
+  /*  public void addCargo(ForCargo forCargo) throws SQLException, ClassNotFoundException {
         String insert = "INSERT INTO cargo(number_cargo,id_client, description, length, width, height, size, weight, " +
                 "price, package, city_from, city_to) VALUES(?,?,?,?,?,?,?,?,?,?,?,?); " +
                 "INSERT INTO book_delivery(number_cargo, status) VALUES (?, ?)";
@@ -148,15 +148,26 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public ResultSet getCargo() {
+    public ResultSet getCargo(ForCargo forCargo, ForClient forClient) {
         ResultSet resSet = null;
-        String select = "SELECT cargo.number_cargo, book_delivery.status,  book_delivery.sent, book_delivery.delivered " +
-                "FROM cargo INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
-                "WHERE cargo.id_client = " + AuthorizationController.id;
+        String select = "SELECT cargo.length, cargo.width, cargo.height, cargo.size, cargo.weight, cargo.package, cargo.price, " +
+                            "book_delivery.status,  book_delivery.time_delivery, " +
+                            "c1.name, " +
+                            "book_delivery.sent, " +
+                            "c2.name, " +
+                            "book_delivery.delivered " +
+                "FROM cargo " +
+                    "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
+                    "INNER JOIN rate AS r ON cargo.rate = r.id " +
+                    "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
+                    "INNER JOIN city AS c2 On r.city_to = c2.id_city " +
+                "WHERE cargo.id_client = ? AND cargo.number_cargo = ?" ;
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forClient.getId());
+            prSt.setString(2, forCargo.getNumber());
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -83,8 +83,8 @@ public class Admin {
         boxRole.setOnAction(this::getRole);
 
         try {
-            initClient();
-            initCargo();
+/*            initClient();
+            initCargo();*/
             initCar();
             initPerson();
         } catch (SQLException e) {
@@ -199,7 +199,7 @@ public class Admin {
         }
     }
 
-    private void initCargo() throws SQLException {
+  /*  private void initCargo() throws SQLException {
         dbHandler = new DatabaseHandler();
         ResultSet rs;
         rs = dbHandler.getCargoTwo();
@@ -210,7 +210,7 @@ public class Admin {
                     rs.getString(3), rs.getString(4), rs.getString(5)));
         }
     }
-
+*/
     private void initCar() throws SQLException {
         dbHandler = new DatabaseHandler();
         ResultSet rs;
