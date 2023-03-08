@@ -35,7 +35,7 @@ public class DatabaseHandler {
 
     public ResultSet checkInfoClient(ForClient forClient) {
         ResultSet resSet = null;
-        String select = "SELECT fullname, birthday FROM client WHERE id_client = ?";
+        String select = "SELECT * FROM client WHERE fullname = (SELECT fullname FROM client WHERE id_client = ?) ";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             prSt.setString(1, forClient.getId());

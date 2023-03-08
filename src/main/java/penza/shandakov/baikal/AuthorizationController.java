@@ -103,7 +103,7 @@ public class AuthorizationController {
                     if (resultAuto.next()) { // если совпадения с клиентом есть из БД, откроет окно клиента
                         id = resultAuto.getInt(1); // запоминает ай ди клиента
                         checkAuthorization = true;
-                        openWindow("/penza/shandakov/baikal/personalAccount.fxml", buttonOpenReg, "Калькулятор");
+                        openWindow("/penza/shandakov/baikal/personalAccount.fxml", buttonOpenReg, "Личный кабинет");
                     }
 
                     else { // иначе будет проверять в таблице персон

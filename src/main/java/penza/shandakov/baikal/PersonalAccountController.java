@@ -119,8 +119,13 @@ public class PersonalAccountController {
 
         try {
             if (resultAuto.next()) {
-                nameClient = resultAuto.getString(1).substring(resultAuto.getString(1).indexOf(' ') + 1);
-                checkInfo = true;
+                if(!resultAuto.getString(1).equals("")){
+                    nameClient = resultAuto.getString(2).substring(resultAuto.getString(2).indexOf(' ') + 1);
+                    checkInfo = true;
+                }
+                else {
+                    checkInfo = false;
+                }
             } else {
                 checkInfo = false;
             }
@@ -146,9 +151,9 @@ public class PersonalAccountController {
 
             if (dateTime.getHour() <= 11 && dateTime.getHour() >= 6)
                 textTwo.setText("Доброе утро, " + nameClient);
-            else if (dateTime.getHour() > 11 && dateTime.getHour() <= 18) {
+            else if (dateTime.getHour() > 11 && dateTime.getHour() <= 17) {
                 textTwo.setText("Добрый день, " + nameClient);
-            } else if (dateTime.getHour() > 18) {
+            } else if (dateTime.getHour() > 17) {
                 textTwo.setText("Добрый вечер, " + nameClient);
             }
             textTwo.setVisible(true);
