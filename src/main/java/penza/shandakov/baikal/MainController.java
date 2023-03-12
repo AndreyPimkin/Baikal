@@ -31,20 +31,22 @@ public class MainController {
     @FXML
     private TextField textWeight;
 
-    private String selectCityFrom = "Пенза";
-    private String selectCityTo = "Москва";
+    public static String selectCityFrom = "Пенза";
+    public static String selectCityTo = "Москва";
     public static float weight = 1;
     public static float size = 0.1f;
     public static float total = 0;
-    private float density = 0;
-    private float rateInCity = 1;
-    private float rateOutCity = 0.15f;
+    public static float density = 0;
+    public static float rateInCity = 1;
+    public static float rateOutCity = 0.15f;
 
-    private float distance = 654;
+    public static float distance = 654;
 
-    private final int rateBigWeight = 450;
-    private final int rateBigSize = 550;
-    private final int rateStandard = 250;
+    public static boolean checkRequest = false;
+
+    public static final int rateBigWeight = 450;
+    public static final int rateBigSize = 550;
+    public static final int rateStandard = 250;
 
 
 
@@ -85,11 +87,20 @@ public class MainController {
         });
         // кнопки открытия новых окон
         buttonResult.setOnAction(actionEvent -> {
-            if(AuthorizationController.checkAuthorization){
-                AuthorizationController.openWindow("/penza/shandakov/baikal/cargo.fxml", buttonResult, "Оформление поставки");
-            }
-            else{
-                AuthorizationController.openWindow("/penza/shandakov/baikal/authorization.fxml", buttonResult, "Авторизация");
+            ResultSet resultAuto;
+            ForClient forClient = new ForClient();
+            forClient.setId(String.valueOf(AuthorizationController.idClient));
+            resultAuto = dbHandler.checkInfoClient(forClient);
+            try {
+                if(AuthorizationController.checkAuthorization && resultAuto.next()){
+                    AuthorizationController.openWindow("/penza/shandakov/baikal/request.fxml", buttonResult, "Оформление заявки");
+                }
+                else{
+                    AuthorizationController.openWindow("/penza/shandakov/baikal/authorization.fxml", buttonResult, "Авторизация");
+                    checkRequest = true;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
         });
@@ -149,9 +160,8 @@ public class MainController {
         else{
             distance = 600;
         }
-
-
     }
+
     private void costCalculation() {
         density = (weight / size); // плотность
         if(weight <= 1500){ //Зависит от массы груза

@@ -113,7 +113,7 @@ public class PersonalAccountController {
         ResultSet resultAuto;
         LocalDateTime dateTime = LocalDateTime.now();
         forClient = new ForClient();
-        forClient.setId(String.valueOf(AuthorizationController.id));
+        forClient.setId(String.valueOf(AuthorizationController.idClient));
         resultAuto = dbHandler.checkInfoClient(forClient);
 
 
@@ -129,7 +129,7 @@ public class PersonalAccountController {
         }
         if (checkInfo) {
             forClient = new ForClient();
-            forClient.setId(String.valueOf(AuthorizationController.id));
+            forClient.setId(String.valueOf(AuthorizationController.idClient));
             resultAuto = dbHandler.getInfoClient(forClient);
             try {
                 if (resultAuto.next()) {
@@ -179,7 +179,7 @@ public class PersonalAccountController {
                         forClient.setName(nameInput.getText());
                         forClient.setPatronymic(patronymicInput.getText());
                         forClient.setCity(selectCity);
-                        forClient.setId(String.valueOf(AuthorizationController.id));
+                        forClient.setId(String.valueOf(AuthorizationController.idClient));
                         try {
                             dbHandler.updateClientFull(forClient);
                         } catch (SQLException | ClassNotFoundException e) {
@@ -202,7 +202,7 @@ public class PersonalAccountController {
                         if (inputPasswordOne.getText().equals(inputPasswordTwo.getText())) {
                             forClient = new ForClient();
                             forClient.setPassword(AuthorizationController.getMd5(inputPasswordOne.getText()));
-                            forClient.setId(String.valueOf(AuthorizationController.id));
+                            forClient.setId(String.valueOf(AuthorizationController.idClient));
                             try {
                                 dbHandler.changePasswordTwo(forClient);
                             } catch (ClassNotFoundException e) {
@@ -285,7 +285,7 @@ public class PersonalAccountController {
                                 forClient.setName(name);
                                 forClient.setSurname(surname);
                                 forClient.setBirthday(birthday);
-                                forClient.setId(String.valueOf(AuthorizationController.id));
+                                forClient.setId(String.valueOf(AuthorizationController.idClient));
                                 try {
                                     dbHandler.updateClient(forClient);
                                 } catch (SQLException e) {
@@ -329,7 +329,7 @@ public class PersonalAccountController {
 
         // кнопка для открытия оформления заказов
         imageApplication.setOnMouseClicked(mouseEvent -> {
-            AuthorizationController.openWindow("/penza/shandakov/baikal/cargo.fxml", buttonBack, "Оформление поставки");
+            AuthorizationController.openWindow("/penza/shandakov/baikal/request.fxml", buttonBack, "Оформление поставки");
         });
         // кнопка для открытия отслеживания
         imageTracking.setOnMouseClicked(mouseEvent -> {

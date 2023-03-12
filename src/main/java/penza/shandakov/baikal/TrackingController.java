@@ -1,11 +1,8 @@
 package penza.shandakov.baikal;
 
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ZoomEvent;
 import penza.shandakov.baikal.POJO.ForCargo;
 import penza.shandakov.baikal.POJO.ForClient;
 import penza.shandakov.baikal.server.DatabaseHandler;
@@ -119,7 +115,7 @@ public class TrackingController {
                 forCargo = new ForCargo();
                 forClient = new ForClient();
                 forCargo.setNumber(inputNumber.getText());
-                forClient.setId(String.valueOf(AuthorizationController.id));
+                forClient.setId(String.valueOf(AuthorizationController.idClient));
                 ResultSet resultCargo = dbHandler.getCargo(forCargo, forClient);
                 try {
                     if (resultCargo.next()) {

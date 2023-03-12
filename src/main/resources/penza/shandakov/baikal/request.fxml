@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="700.0" style="-fx-background-color: none;" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.Cargo">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="625.0" prefWidth="700.0" style="-fx-background-color: white;" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="penza.shandakov.baikal.RequestController">
    <children>
-      <Button fx:id="person" layoutX="505.0" layoutY="20.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Личный кабинет" textFill="WHITE">
+      <Button fx:id="buttonOpenPersonalAccount" layoutX="505.0" layoutY="20.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Личный кабинет" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
       </Button>
-      <ImageView fx:id="imageInfo" fitHeight="55.0" fitWidth="65.0" layoutX="420.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" styleClass="imageS">
+      <ImageView fx:id="imageTracking" fitHeight="55.0" fitWidth="65.0" layoutX="420.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" styleClass="imageS">
          <image>
             <Image url="@../../../picture/info.png" />
          </image>
@@ -26,8 +26,8 @@
             <Image url="@../../../picture/logo.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="boxFrom" layoutX="25.0" layoutY="260.0" prefHeight="35.0" prefWidth="250.0" style="-fx-border-color: #a0a0a0; -fx-background-color: none;" styleClass="boxTo" />
-      <Label layoutX="20.0" layoutY="215.0" prefHeight="21.0" prefWidth="65.0" text="Откуда">
+      <ComboBox fx:id="boxFrom" layoutX="25.0" layoutY="260.0"  prefHeight="35.0" prefWidth="250.0" style="-fx-border-color: #a0a0a0; -fx-background-color: none;" styleClass="boxTo" />
+      <Label layoutX="25.0" layoutY="215.0" prefHeight="21.0" prefWidth="65.0" text="Откуда">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
@@ -68,23 +68,23 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="box" layoutX="395.0" layoutY="475.0" prefHeight="35.0" prefWidth="250.0" style="-fx-border-color: #a0a0a0; -fx-background-color: none;" styleClass="boxTo" />
+      <ComboBox fx:id="boxPacking" layoutX="395.0" layoutY="475.0" prefHeight="35.0" prefWidth="250.0" style="-fx-border-color: #a0a0a0; -fx-background-color: none;" styleClass="boxTo" />
       <Label layoutX="394.0" layoutY="430.0" prefHeight="21.0" prefWidth="65.0" text="Упаковка">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="opis" layoutX="25.0" layoutY="475.0" prefHeight="35.0" prefWidth="250.0" style="-fx-border-color: #a0a0a0;">
+      <TextField fx:id="description" layoutX="25.0" layoutY="475.0"  prefHeight="35.0" prefWidth="250.0" style="-fx-border-color: #a0a0a0;">
          <font>
             <Font name="Century" size="16.0" />
          </font>
       </TextField>
-      <Button fx:id="buttonGo" layoutX="524.0" layoutY="554.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Оформить" textFill="WHITE">
+      <Button fx:id="makeRequestButton" layoutX="524.0" layoutY="554.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Оформить" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
       </Button>
-      <Pane layoutY="100.0" opacity="0.2" prefHeight="30.0" prefWidth="700.0" style="-fx-background-color: #a0a0a0;" />
+      <Pane layoutY="100.0" opacity="0.2" prefHeight="30.0" prefWidth="700.0" style="-fx-background-color: #cccccc;" />
       <Label layoutX="25.0" layoutY="165.0" prefHeight="26.0" prefWidth="365.0" text="Расчет и оформление заявки">
          <font>
             <Font name="Arial Bold" size="22.0" />
@@ -100,35 +100,40 @@
             <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="itog" layoutX="357.0" layoutY="554.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Посчитать" textFill="WHITE">
+      <Button fx:id="countButton" layoutX="357.0" layoutY="554.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #19b2e6;" styleClass="buttonLC" text="Посчитать" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="ob" layoutX="397.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
+      <TextField fx:id="sizeInput" layoutX="397.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
          <font>
             <Font name="Century" size="16.0" />
          </font>
       </TextField>
-      <TextField fx:id="ves" layoutX="509.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
+      <TextField fx:id="weightInput" layoutX="509.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
          <font>
             <Font name="Century" size="16.0" />
          </font>
       </TextField>
-      <TextField fx:id="vis" layoutX="221.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
+      <TextField fx:id="heightInput" layoutX="222.0" layoutY="365.0" onKeyPressed="#pressedEnter"  prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;" text="0">
          <font>
             <Font name="Century" size="16.0" />
          </font>
       </TextField>
-      <TextField fx:id="shir" layoutX="124.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
+      <TextField fx:id="widthInput" layoutX="124.0" layoutY="365.0" onKeyPressed="#pressedEnter" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;" text="0">
          <font>
             <Font name="Century" size="16.0" />
          </font>
       </TextField>
-      <TextField fx:id="dlina" layoutX="25.0" layoutY="365.0" prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;">
+      <TextField fx:id="lengthInput" layoutX="25.0" layoutY="365.0" onKeyPressed="#pressedEnter"  prefHeight="45.0" prefWidth="60.0" style="-fx-border-color: #a0a0a0;" text="0">
          <font>
             <Font name="Century" size="16.0" />
          </font>
       </TextField>
+      <Label fx:id="errorInput" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="526.0" prefHeight="14.0" prefWidth="266.0" text="Ошибка" textFill="RED">
+         <font>
+            <Font name="Century" size="11.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

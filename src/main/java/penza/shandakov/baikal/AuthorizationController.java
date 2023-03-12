@@ -50,7 +50,7 @@ public class AuthorizationController {
 
 
     DatabaseHandler dbHandler = new DatabaseHandler();
-    public static int id;
+    public static int idClient;
     public static int idPerson;
 
     public static boolean checkAuthorization = false;
@@ -101,9 +101,14 @@ public class AuthorizationController {
 
                 try {
                     if (resultAuto.next()) { // если совпадения с клиентом есть из БД, откроет окно клиента
-                        id = resultAuto.getInt(1); // запоминает ай ди клиента
+                        idClient = resultAuto.getInt(1); // запоминает ай ди клиента
                         checkAuthorization = true;
-                        openWindow("/penza/shandakov/baikal/personalAccount.fxml", buttonOpenReg, "Калькулятор");
+                        if(MainController.checkRequest){
+                            AuthorizationController.openWindow("/penza/shandakov/baikal/request.fxml",   buttonLogin, "Оформление заявки");
+                        }
+                        else {
+                            openWindow("/penza/shandakov/baikal/personalAccount.fxml",   buttonLogin, "Калькулятор");
+                        }
                     }
 
                     else { // иначе будет проверять в таблице персон
@@ -114,13 +119,13 @@ public class AuthorizationController {
                         if (resultPerson.next()) { // если и в персоне не найдет сработает 76 строка
                             idPerson = resultPerson.getInt(1);
                             if (resultPerson.getString("role").equals("Логист")) {
-                                openWindow("/penza/shandakov/baikal/logist.fxml", buttonOpenReg, "Кабинет логиста");}
+                                openWindow("/penza/shandakov/baikal/logist.fxml",buttonLogin , "Кабинет логиста");}
 
                             else if (resultPerson.getString("role").equals("Водитель")) {
-                                openWindow("/penza/shandakov/baikal/driver.fxml", buttonOpenReg, "Кабинет водителя");}
+                                openWindow("/penza/shandakov/baikal/driver.fxml",buttonLogin , "Кабинет водителя");}
 
                             else if (resultPerson.getString("role").equals("Админ")) {
-                                openWindow("/penza/shandakov/baikal/admin.fxml", buttonOpenReg, "Кабинет администратора");}
+                                openWindow("/penza/shandakov/baikal/admin.fxml",buttonLogin , "Кабинет администратора");}
                         }
                         else {
                             errorInput.setVisible(true);}

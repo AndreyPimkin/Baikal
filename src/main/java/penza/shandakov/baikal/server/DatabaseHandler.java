@@ -124,41 +124,46 @@ public class DatabaseHandler {
     }
 
 
-  /*  public void addCargo(ForCargo forCargo) throws SQLException, ClassNotFoundException {
-        String insert = "INSERT INTO cargo(number_cargo,id_client, description, length, width, height, size, weight, " +
-                "price, package, city_from, city_to) VALUES(?,?,?,?,?,?,?,?,?,?,?,?); " +
-                "INSERT INTO book_delivery(number_cargo, status) VALUES (?, ?)";
+    public void addCargo(ForCargo forCargo) throws ClassNotFoundException {
+        String insert = "INSERT INTO cargo(number_cargo, id_client,description, length, width, height, size, weight, price, id_package, rate) " +
+                "VALUES(?,?,?,?,?,?,?,?,?," +
+                "(SELECT id_package FROM package WHERE name = ?)," +
+                "(SELECT id FROM rate " +
+                "INNER JOIN city AS c1 ON rate.city_from = c1.id_city " +
+                "INNER JOIN city AS c2 On rate.city_to = c2.id_city " +
+                "WHERE c1.name = ? AND c2.name = ?)); " +
+                "INSERT INTO book_delivery(number_cargo, status) VALUES (?, 'В заявку')";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forCargo.getNumber());
-            prSt.setString(2, forCargo.getId_client());
-            prSt.setString(3, forCargo.getDesc());
-            prSt.setFloat(4, Float.parseFloat(forCargo.getLen()));
-            prSt.setFloat(5, Float.parseFloat(forCargo.getWid()));
-            prSt.setFloat(6, Float.parseFloat(forCargo.getHei()));
+            prSt.setString(2, forCargo.getIDClient());
+            prSt.setString(3, forCargo.getDescription());
+            prSt.setFloat(4, Float.parseFloat(forCargo.getLength()));
+            prSt.setFloat(5, Float.parseFloat( forCargo.getWidth()));
+            prSt.setFloat(6, Float.parseFloat( forCargo.getHeight()));
             prSt.setFloat(7, Float.parseFloat(forCargo.getSize()));
-            prSt.setFloat(8, Float.parseFloat(forCargo.getWei()));
+            prSt.setFloat(8, Float.parseFloat(forCargo.getWeight()));
             prSt.setFloat(9, Float.parseFloat(forCargo.getPrice()));
-            prSt.setString(10, forCargo.getPack());
-            prSt.setString(11, forCargo.getCity_from());
-            prSt.setString(12, forCargo.getCity_to());
+            prSt.setString(10, forCargo.getPacking());
+            prSt.setString(11, forCargo.getCityFrom());
+            prSt.setString(12, forCargo.getCityTo());
             prSt.setString(13, forCargo.getNumberTwo());
-            prSt.setString(14, forCargo.getStatus());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public ResultSet getCargo(ForCargo forCargo, ForClient forClient) {
         ResultSet resSet = null;
-        String select = "SELECT cargo.length, cargo.width, cargo.height, cargo.size, cargo.weight, cargo.package, cargo.price, " +
+        String select = "SELECT cargo.length, cargo.width, cargo.height, cargo.size, cargo.weight, package.name, cargo.price, " +
                             "book_delivery.status,  book_delivery.time_delivery, " +
                             "c1.name, " +
                             "book_delivery.sent, " +
                             "c2.name, " +
                             "book_delivery.delivered " +
                 "FROM cargo " +
+                    "INNER JOIN package ON cargo.id_package = package.id_package " +
                     "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
                     "INNER JOIN rate AS r ON cargo.rate = r.id " +
                     "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
@@ -211,6 +216,20 @@ public class DatabaseHandler {
         return resSet;
     }
 
+    public ResultSet getPackage() {
+        ResultSet resSet = null;
+        String select = "SELECT name FROM package";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+
+
 
     public ResultSet getDistanceCity(ForClient forClient) {
         ResultSet resSet = null;
@@ -230,6 +249,20 @@ public class DatabaseHandler {
         return resSet;
     }
 
+    public ResultSet getPricePacking(ForCargo forCargo) {
+        ResultSet resSet = null;
+        String select = "SELECT price FROM package WHERE name = ?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, forCargo.getPacking());
+
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
 
 
 
