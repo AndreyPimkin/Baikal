@@ -44,6 +44,9 @@ public class RegistrationController {
     void initialize() {
         errorImage.setVisible(false);
         errorInput.setVisible(false);
+        buttonBack.setOnAction(actionEvent -> {
+            AuthorizationController.openWindow("/penza/shandakov/baikal/authorization.fxml",buttonBack, "Авторизация");
+        });
         buttonReg.setOnAction(actionEvent -> {
             if (inputNumber.getText().matches("^8\\d{10}$")) {
                 errorImage.setVisible(false);
