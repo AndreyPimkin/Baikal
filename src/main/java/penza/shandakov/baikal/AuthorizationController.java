@@ -119,7 +119,7 @@ public class AuthorizationController {
                         if (resultPerson.next()) { // если и в персоне не найдет сработает 76 строка
                             idPerson = resultPerson.getInt(1);
                             if (resultPerson.getString("role").equals("Логист")) {
-                                openWindow("/penza/shandakov/baikal/logist.fxml",buttonLogin , "Кабинет логиста");}
+                                openWindow("/penza/shandakov/baikal/logistician.fxml",buttonLogin , "Кабинет логиста");}
 
                             else if (resultPerson.getString("role").equals("Водитель")) {
                                 openWindow("/penza/shandakov/baikal/driver.fxml",buttonLogin , "Кабинет водителя");}

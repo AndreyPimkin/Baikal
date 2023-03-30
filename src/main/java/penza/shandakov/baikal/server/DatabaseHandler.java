@@ -4,7 +4,7 @@ import penza.shandakov.baikal.AuthorizationController;
 import penza.shandakov.baikal.POJO.ForCar;
 import penza.shandakov.baikal.POJO.ForCargo;
 import penza.shandakov.baikal.POJO.ForClient;
-import penza.shandakov.baikal.POJO.ForLogist;
+import penza.shandakov.baikal.POJO.ForLogistician;
 
 import java.sql.*;
 
@@ -180,6 +180,42 @@ public class DatabaseHandler {
         return resSet;
     }
 
+    public ResultSet getCargoForLogistician() {
+        ResultSet resSet = null;
+        String select = "SELECT cargo.id_client, cargo.number_cargo, cargo.length ,cargo.width, cargo.height, cargo.size, cargo.weight, " +
+                "c1.name, c2.name, cargo.description " +
+                "FROM cargo " +
+                "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
+                "INNER JOIN rate AS r ON cargo.rate = r.id " +
+                "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
+                "INNER JOIN city AS c2 On r.city_to = c2.id_city " +
+                "WHERE book_delivery.status = 'В заявку' OR book_delivery.status = 'Отклонено водителем'" ;
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet getClientForLogistician() {
+        ResultSet resSet = null;
+        String select = "SELECT client.id_client, client.fullname, city.name, client.phone  from client " +
+                        "INNER JOIN city ON client.city = city.id_city" ;
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+
+
     public ResultSet getDriver() {
         ResultSet resSet = null;
         String select = "SELECT * FROM personal WHERE role = 'Водитель'";
@@ -283,9 +319,9 @@ public class DatabaseHandler {
         return resSet;
     }
 
-    public void changeCargo(ForLogist forLogist) throws SQLException, ClassNotFoundException {
+    public void changeCargo(ForLogistician forLogistician) throws SQLException, ClassNotFoundException {
         String insert = "UPDATE book_delivery SET " +
-                "state=?," +
+                "transport=?," +
                 "id_personal=?," +
                 "time_delivery=?, " +
                 "status=?, " +
@@ -293,12 +329,28 @@ public class DatabaseHandler {
                 "WHERE number_cargo = ?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
-            prSt.setString(1, forLogist.getState());
-            prSt.setString(2, forLogist.getId_personal());
-            prSt.setString(3, forLogist.getTime());
-            prSt.setString(4, forLogist.getStatus());
-            prSt.setString(5, forLogist.getFrom());
-            prSt.setString(6, forLogist.getNumber());
+            prSt.setString(1, forLogistician.getCar());
+            prSt.setInt(2, forLogistician.getIdPersonal());
+            prSt.setString(3, forLogistician.getTimeDelivery());
+            prSt.setString(4, forLogistician.getStatus());
+            prSt.setString(5, forLogistician.getSent());
+            prSt.setString(6, forLogistician.getNumberCargo());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeCargoTwo(ForLogistician forLogistician) throws SQLException, ClassNotFoundException {
+        String insert = "UPDATE book_delivery SET " +
+                "id_personal=?," +
+                "status=? " +
+                "WHERE number_cargo = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setInt(1, forLogistician.getIdPersonal());
+            prSt.setString(2, forLogistician.getStatus());
+            prSt.setString(3, forLogistician.getNumberCargo());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -346,11 +398,13 @@ public class DatabaseHandler {
         return resSet;
     }
 
-    public ResultSet getCar() {
+    public ResultSet getCar(ForCar forCar) {
         ResultSet resSet = null;
-        String select = "SELECT * FROM transport";
+        String select = "SELECT * FROM transport WHERE load_capacity > ? AND size > ?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setFloat(1, forCar.getLoad_capacity());
+            prSt.setFloat(2, forCar.getSize());
             resSet = prSt.executeQuery();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -371,6 +425,7 @@ public class DatabaseHandler {
     }
 
 
+/*
     public void addCar(ForCar forCar) throws ClassNotFoundException {
         String insert = "INSERT INTO transport VALUES(?, ?, ?, ?, ?)";
         try {
@@ -385,6 +440,7 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+*/
 
     public void addPerson(ForClient forClient) throws ClassNotFoundException {
         String insert = "INSERT INTO personal VALUES(?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
@@ -406,6 +462,7 @@ public class DatabaseHandler {
         }
     }
 
+/*
     public void deleteCar(ForCar forCar) throws ClassNotFoundException {
         String insert = "DELETE FROM transport WHERE state = ?";
         try {
@@ -416,6 +473,7 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+*/
 
     public void deletePerson(ForClient forClient) throws ClassNotFoundException {
         String insert = "DELETE FROM  personal WHERE id_personal = ?";

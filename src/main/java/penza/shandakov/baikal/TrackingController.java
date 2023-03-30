@@ -103,7 +103,13 @@ public class TrackingController {
         });
 
         backButton.setOnAction(actionEvent -> {
-            AuthorizationController.openWindow("/penza/shandakov/baikal/personalAccount.fxml", backButton, "Личный кабинет");
+            if (RequestController.checkBack){
+                RequestController.checkBack = false;
+                AuthorizationController.openWindow("/penza/shandakov/baikal/request.fxml", backButton, "Оформление заявки");
+            }
+            else {
+                AuthorizationController.openWindow("/penza/shandakov/baikal/personalAccount.fxml", backButton, "Личный кабинет");
+            }
         });
 
         searchButton.setOnAction(actionEvent -> {

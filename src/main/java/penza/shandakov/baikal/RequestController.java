@@ -68,17 +68,34 @@ public class RequestController {
     private String packing = "Упаковка в пузырчатую полиэтиленовую пленку";
     private float packingPrice;
 
+    public static boolean checkBack = true;
+
+    private boolean checkInfo = false;
 
     DatabaseHandler dbHandler = new DatabaseHandler();
     Random random = new Random();
 
+    ForClient forClient = new ForClient();
+
     @FXML
     void initialize() {
+        ResultSet resultAuto;
+        forClient = new ForClient();
+        forClient.setId(String.valueOf(AuthorizationController.idClient));
+        resultAuto = dbHandler.checkInfoClient(forClient);
+
+        try {
+            checkInfo = resultAuto.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         buttonOpenPersonalAccount.setOnAction(actionEvent -> {
             AuthorizationController.openWindow("/penza/shandakov/baikal/personalAccount.fxml", buttonOpenPersonalAccount, "Личный кабинет");
         });
         imageTracking.setOnMouseClicked(mouseEvent -> {
             AuthorizationController.openWindow("/penza/shandakov/baikal/tracking.fxml", buttonOpenPersonalAccount, "Отслеживание");
+            checkBack = true;
         });
 
         errorInput.setVisible(false);
@@ -161,44 +178,54 @@ public class RequestController {
 
         makeRequestButton.setOnAction(actionEvent -> {
             errorInput.setVisible(false);
-            if(MainController.total <= 0){
-                errorInput.setVisible(true);
-                errorInput.setText("Ошибка в подсчетах цены");
-            }
-            else if (MainController.size != Float.parseFloat(lengthInput.getText()) * Float.parseFloat(widthInput.getText()) * Float.parseFloat(heightInput.getText()) ) {
-                errorInput.setVisible(true);
-                errorInput.setText("Ошибка в подсчетах объема");
-            }
-            else {
-                number = generateNumber();
-                ForCargo forCargo = new ForCargo();
-                forCargo.setNumber(number);
-                forCargo.setIDClient(String.valueOf(AuthorizationController.idClient));
-                if(description.getText().equals("")){
-                    forCargo.setDescription("Отсутствует");
+            if(checkInfo){
+                if(MainController.total <= 0){
+                    errorInput.setVisible(true);
+                    errorInput.setText("Ошибка в подсчетах цены");
                 }
-                else{
-                    forCargo.setDescription(description.getText());
+                else if (MainController.size != Float.parseFloat(lengthInput.getText()) * Float.parseFloat(widthInput.getText()) * Float.parseFloat(heightInput.getText()) ) {
+                    errorInput.setVisible(true);
+                    errorInput.setText("Ошибка в подсчетах объема");
                 }
-                forCargo.setLength(lengthInput.getText());
-                forCargo.setWidth(widthInput.getText());
-                forCargo.setHeight(heightInput.getText());
-                forCargo.setSize(String.valueOf(MainController.size));
-                forCargo.setWeight(String.valueOf(MainController.weight));
-                forCargo.setPrice(String.valueOf(MainController.total + packingPrice * MainController.size));
-                forCargo.setPacking(packing);
-                forCargo.setCityFrom(MainController.selectCityFrom);
-                forCargo.setCityTo(MainController.selectCityTo);
-                forCargo.setNumberTwo(number);
-                try {
-                    dbHandler.addCargo(forCargo);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
+                else if(MainController.size > 100){
+                    errorInput.setVisible(true);
+                    errorInput.setText("Слишком большой объем!");
                 }
-                errorInput.setVisible(true);
-                errorInput.setText("Заявка отправлена");
+                else {
+                    number = generateNumber();
+                    ForCargo forCargo = new ForCargo();
+                    forCargo.setNumber(number);
+                    forCargo.setIDClient(String.valueOf(AuthorizationController.idClient));
+                    if(description.getText().equals("")){
+                        forCargo.setDescription("Отсутствует");
+                    }
+                    else{
+                        forCargo.setDescription(description.getText());
+                    }
+                    forCargo.setLength(lengthInput.getText());
+                    forCargo.setWidth(widthInput.getText());
+                    forCargo.setHeight(heightInput.getText());
+                    forCargo.setSize(String.valueOf(MainController.size));
+                    forCargo.setWeight(String.valueOf(MainController.weight));
+                    forCargo.setPrice(String.valueOf(MainController.total + packingPrice * MainController.size));
+                    forCargo.setPacking(packing);
+                    forCargo.setCityFrom(MainController.selectCityFrom);
+                    forCargo.setCityTo(MainController.selectCityTo);
+                    forCargo.setNumberTwo(number);
+                    try {
+                        dbHandler.addCargo(forCargo);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                    errorInput.setVisible(true);
+                    errorInput.setText("Заявка отправлена");
+                }
             }
 
+            else{
+                errorInput.setVisible(true);
+                errorInput.setText("Заполните профиль");
+            }
         });
 
 

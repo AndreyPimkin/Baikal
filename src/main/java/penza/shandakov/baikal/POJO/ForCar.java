@@ -2,61 +2,25 @@ package penza.shandakov.baikal.POJO;
 
 public class ForCar {
 
-    private String number;
+    private String state;
     private String model;
     private String status;
-    private String vin;
-    private String load;
+    private Float load_capacity;
+    private Float size;
 
-    public ForCar(String number, String model, String status, String vin, String load) {
-        this.number = number;
-        this.model = model;
-        this.status = status;
-        this.vin = vin;
-        this.load = load;
+    public Float getLoad_capacity() {
+        return load_capacity;
     }
 
-    public ForCar() {
-
+    public void setLoad_capacity(Float load_capacity) {
+        this.load_capacity = load_capacity;
     }
 
-    public String getNumber() {
-        return number;
+    public Float getSize() {
+        return size;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public String getLoad() {
-        return load;
-    }
-
-    public void setLoad(String load) {
-        this.load = load;
+    public void setSize(Float size) {
+        this.size = size;
     }
 }

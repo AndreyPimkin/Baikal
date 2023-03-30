@@ -82,15 +82,15 @@ public class Admin {
         boxCity.setOnAction(this::getCity);
         boxRole.setOnAction(this::getRole);
 
-        try {
-/*            initClient();
-            initCargo();*/
+  /*      try {
+*//*            initClient();
+            initCargo();*//*
             initCar();
             initPerson();
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
-        }
+        }*/
         idClientClient.setCellValueFactory(new PropertyValueFactory<>("id"));
         fullnameClient.setCellValueFactory(new PropertyValueFactory<>("fullname"));
         cityTwo.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -124,7 +124,7 @@ public class Admin {
         person.setItems(personList);
 
 
-        addCar.setOnAction(actionEvent -> {
+        /*addCar.setOnAction(actionEvent -> {
             ForCar forCar = new ForCar();
             forCar.setNumber(numberCarAdd.getText());
             forCar.setModel(modelAdd.getText());
@@ -137,9 +137,9 @@ public class Admin {
                 throw new RuntimeException(e);
             }
             refreshTableCar();
-        });
+        });*/
 
-        deleteCar.setOnAction(actionEvent -> {
+      /*  deleteCar.setOnAction(actionEvent -> {
             ForCar forCar = new ForCar();
             forCar.setNumber(numberCarAdd.getText());
 
@@ -150,7 +150,7 @@ public class Admin {
             }
             refreshTableCar();
         });
-
+*/
         add.setOnAction(actionEvent -> {
             ForClient forClient = new ForClient();
             forClient.setId(idPersonAdd.getText());
@@ -211,6 +211,7 @@ public class Admin {
         }
     }
 */
+/*
     private void initCar() throws SQLException {
         dbHandler = new DatabaseHandler();
         ResultSet rs;
@@ -222,6 +223,7 @@ public class Admin {
                     rs.getString(3), rs.getString(4), rs.getString(5)));
         }
     }
+*/
 
     private void initPerson() throws SQLException {
         dbHandler = new DatabaseHandler();
@@ -237,7 +239,7 @@ public class Admin {
         }
     }
 
-    private void refreshTableCar() {
+    /*private void refreshTableCar() {
         car.getItems().clear();
         try {
             initCar();
@@ -250,7 +252,7 @@ public class Admin {
         vin.setCellValueFactory(new PropertyValueFactory<>("vin"));
         load.setCellValueFactory(new PropertyValueFactory<>("load"));
         car.setItems(carList);
-    }
+    }*/
 
     private void refreshTablePerson() {
         person.getItems().clear();
