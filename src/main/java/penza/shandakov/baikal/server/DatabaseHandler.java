@@ -245,7 +245,9 @@ public class DatabaseHandler {
                 "INNER JOIN rate AS r ON cargo.rate = r.id " +
                 "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
                 "INNER JOIN city AS c2 On r.city_to = c2.id_city " +
-                "WHERE book_delivery.status = 'Принято в доставку'" ;
+                "WHERE book_delivery.status = 'Принято в доставку' OR book_delivery.status = 'Собран' " +
+                "OR book_delivery.status = 'Погружен' OR book_delivery.status = 'В пути' OR book_delivery.status = 'Доставлен в город' " +
+                "OR book_delivery.status = 'Отгружен'" ;
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
 

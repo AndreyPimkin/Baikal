@@ -54,12 +54,12 @@
                <children>
                   <TableView fx:id="tableCargoTwo" layoutX="20.0" layoutY="35.0" prefHeight="270.0" prefWidth="620.0">
                      <columns>
-                        <TableColumn fx:id="numberCargoTwo" prefWidth="125.0" text="Номер груза" />
-                        <TableColumn fx:id="transportTwo" prefWidth="100.0" text="Транспорт" />
-                        <TableColumn fx:id="fromCityTwo" prefWidth="100.0" text="Откуда" />
-                        <TableColumn fx:id="toCityTwo" minWidth="0.0" prefWidth="100.0" text="Куда" />
-                        <TableColumn fx:id="status" prefWidth="100.0" text="Статус" />
-                        <TableColumn fx:id="sentTwo" prefWidth="100.0" text="Принято" />
+                        <TableColumn fx:id="numberCargoTwo" prefWidth="99.0" text="Номер груза" />
+                        <TableColumn fx:id="transportTwo" prefWidth="113.0" text="Транспорт" />
+                        <TableColumn fx:id="fromCityTwo" prefWidth="103.0" text="Откуда" />
+                        <TableColumn fx:id="toCityTwo" minWidth="0.0" prefWidth="99.0" text="Куда" />
+                        <TableColumn fx:id="status" prefWidth="121.0" text="Статус" />
+                        <TableColumn fx:id="sentTwo" prefWidth="90.0" text="Принято" />
                      </columns>
                   </TableView>
                   <Button fx:id="updateButton" layoutX="390.0" layoutY="365.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #19b2e6;" styleClass="buttonGO" text="Обновить" textFill="WHITE">

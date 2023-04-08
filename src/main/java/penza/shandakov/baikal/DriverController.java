@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -103,7 +104,11 @@ public class DriverController {
     private final ObservableList<ForLogistician> cargoList = FXCollections.observableArrayList();
     private final ObservableList<ForLogistician> cargoAcceptedList = FXCollections.observableArrayList();
 
+    private final String[] listStatus = new String[]{"Собран", "Погружен", "В пути", "Доставлен в город", "Отгружен", "Ожидает получения"};
+
     ForLogistician selectCargo;
+
+    private String selectedStatus;
 
     @FXML
     void initialize() {
@@ -116,6 +121,9 @@ public class DriverController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        boxStatus.getItems().addAll(this.listStatus);
+        boxStatus.setOnAction(this::getStatus);
 
         numberCargo.setCellValueFactory(new PropertyValueFactory<>("numberCargo"));
         sent.setCellValueFactory(new PropertyValueFactory<>("sent"));
@@ -177,6 +185,52 @@ public class DriverController {
             }
         });
 
+        updateButton.setOnAction(actionEvent -> {
+            errorInputTwo.setVisible(false);
+            if(tableCargoTwo.getSelectionModel().getSelectedItem() == null){
+                errorInputTwo.setVisible(true);
+                errorInputTwo.setText("Выберите доставку");
+            }
+            else if (selectedStatus.equals("")) {
+                errorInputTwo.setVisible(true);
+                errorInputTwo.setText("Выберите статус");
+            }
+            else {
+                selectCargo = tableCargoTwo.getSelectionModel().getSelectedItem();
+                ForLogistician forLogistician = new ForLogistician();
+                forLogistician.setNumberCargo(selectCargo.getNumberCargo());
+                forLogistician.setStatus(selectedStatus);
+                try {
+                    dbHandler.changeCargoForDriver(forLogistician);
+                } catch (SQLException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                refreshTableCargo();
+                refreshTableCargoTwo();
+            }
+        });
+
+        cancelButtonTwo.setOnAction(actionEvent -> {
+            errorInputTwo.setVisible(false);
+            if(tableCargoTwo.getSelectionModel().getSelectedItem() == null){
+                errorInputTwo.setVisible(true);
+                errorInputTwo.setText("Выберите доставку");
+            }
+            else {
+                selectCargo = tableCargoTwo.getSelectionModel().getSelectedItem();
+                ForLogistician forLogistician = new ForLogistician();
+                forLogistician.setNumberCargo(selectCargo.getNumberCargo());
+                forLogistician.setStatus("Подтвержден");
+                try {
+                    dbHandler.changeCargoForDriver(forLogistician);
+                } catch (SQLException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                refreshTableCargoTwo();
+                refreshTableCargo();
+            }
+        });
+
 
     }
 
@@ -228,7 +282,7 @@ public class DriverController {
     private void refreshTableCargoTwo() {
         tableCargoTwo.getItems().clear();
         try {
-            initCargo();
+            initAcceptedCargo();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -236,10 +290,15 @@ public class DriverController {
         transportTwo.setCellValueFactory(new PropertyValueFactory<>("car"));
         fromCityTwo.setCellValueFactory(new PropertyValueFactory<>("fromCity"));
         toCityTwo.setCellValueFactory(new PropertyValueFactory<>("toCity"));
-        status.setCellValueFactory(new PropertyValueFactory<>(" status"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
         sentTwo.setCellValueFactory(new PropertyValueFactory<>("sent"));
         tableCargoTwo.setItems(cargoAcceptedList);
     }
+
+    private void getStatus(ActionEvent actionEvent) {
+        selectedStatus = boxStatus.getValue();
+    }
+
 
 
 }
