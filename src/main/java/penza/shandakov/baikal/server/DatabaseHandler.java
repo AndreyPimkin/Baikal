@@ -214,7 +214,47 @@ public class DatabaseHandler {
         return resSet;
     }
 
+    public ResultSet getCargoForDriver() {
+        ResultSet resSet = null;
+        String select = "SELECT cargo.number_cargo, book_delivery.sent, transport.model, cargo.length ,cargo.width, cargo.height, cargo.size, cargo.weight, " +
+                "c1.name, c2.name, cargo.description " +
+                "FROM cargo " +
+                "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
+                "INNER JOIN transport ON book_delivery.transport = transport.state " +
+                "INNER JOIN rate AS r ON cargo.rate = r.id " +
+                "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
+                "INNER JOIN city AS c2 On r.city_to = c2.id_city " +
+                "WHERE book_delivery.status = 'Подтвержден'" ;
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
 
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet getCargoAcceptedForDriver() {
+        ResultSet resSet = null;
+        String select = "SELECT cargo.number_cargo, transport.model,  " +
+                "c1.name, c2.name, book_delivery.status, book_delivery.sent " +
+                "FROM cargo " +
+                "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
+                "INNER JOIN transport ON book_delivery.transport = transport.state " +
+                "INNER JOIN rate AS r ON cargo.rate = r.id " +
+                "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
+                "INNER JOIN city AS c2 On r.city_to = c2.id_city " +
+                "WHERE book_delivery.status = 'Принято в доставку'" ;
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
 
     public ResultSet getDriver() {
         ResultSet resSet = null;
@@ -340,6 +380,20 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
+    public void changeCargoForDriver(ForLogistician forLogistician) throws SQLException, ClassNotFoundException {
+        String insert = "UPDATE book_delivery SET " +
+                "status=? WHERE number_cargo = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forLogistician.getStatus());
+            prSt.setString(2, forLogistician.getNumberCargo());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void changeCargoTwo(ForLogistician forLogistician) throws SQLException, ClassNotFoundException {
         String insert = "UPDATE book_delivery SET " +

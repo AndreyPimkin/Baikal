@@ -144,4 +144,27 @@ public class ForLogistician {
         this.toCity = toCity;
         this.description = description;
     }
+
+
+    public ForLogistician(String numberCargo, String sent, String car, String proportions, Float size, Float weight, String fromCity, String toCity, String description) {
+        this.numberCargo = numberCargo;
+        this.proportions = proportions;
+        this.size = size;
+        this.weight = weight;
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+        this.description = description;
+        this.car = car;
+        this.sent = sent;
+    }
+
+    public ForLogistician(String numberCargo, String car, String fromCity, String toCity, String status, String sent) {
+        this.numberCargo = numberCargo;
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+        this.car = car;
+        this.status = status;
+        this.sent = sent;
+
+    }
 }

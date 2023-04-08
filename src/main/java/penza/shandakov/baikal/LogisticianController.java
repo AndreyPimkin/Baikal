@@ -162,6 +162,7 @@ public class LogisticianController {
                 errorInput.setText("Выберите водителя");
             }
             else if(tableCargo.getSelectionModel().getSelectedItem() == null){
+                errorInput.setVisible(true);
                 errorInput.setText("Выберите заявку");
             }
             else {
@@ -192,6 +193,7 @@ public class LogisticianController {
         cancelButton.setOnAction(actionEvent -> {
             errorInput.setVisible(false);
             if(tableCargo.getSelectionModel().getSelectedItem() == null){
+                errorInput.setVisible(true);
                 errorInput.setText("Выберите заявку");
             }
             else {
