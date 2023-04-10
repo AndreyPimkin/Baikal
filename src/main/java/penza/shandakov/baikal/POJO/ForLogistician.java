@@ -17,6 +17,46 @@ public class ForLogistician {
     private String sent;
     private String status;
 
+    private String packing;
+
+    private String logist;
+
+    private String delivered;
+
+    private String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(String delivered) {
+        this.delivered = delivered;
+    }
+
+    public String getLogist() {
+        return logist;
+    }
+
+    public void setLogist(String logist) {
+        this.logist = logist;
+    }
+
+    public String getPacking() {
+        return packing;
+    }
+
+    public void setPacking(String packing) {
+        this.packing = packing;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -165,6 +205,26 @@ public class ForLogistician {
         this.car = car;
         this.status = status;
         this.sent = sent;
+    }
 
+    public ForLogistician(String idClient, String numberCargo, String description, String proportions, Float size,
+                          Float weight, String price, String packing, String fromCity, String toCity, String car,
+                          int idPersonal, String timeDelivery, String status, String sent, String delivered) {
+        this.idClient = idClient;
+        this.numberCargo = numberCargo;
+        this.proportions = proportions;
+        this.size = size;
+        this.weight = weight;
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+        this.description = description;
+        this.car = car;
+        this.idPersonal = idPersonal;
+        this.timeDelivery = timeDelivery;
+        this.sent = sent;
+        this.status = status;
+        this.packing = packing;
+        this.delivered = delivered;
+        this.price = price;
     }
 }

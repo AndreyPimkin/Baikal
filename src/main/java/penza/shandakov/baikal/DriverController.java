@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import penza.shandakov.baikal.POJO.ForClient;
 import penza.shandakov.baikal.POJO.ForLogistician;
 import penza.shandakov.baikal.server.DatabaseHandler;
 

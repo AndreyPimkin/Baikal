@@ -345,13 +345,19 @@ public class DatabaseHandler {
 
 
 
-    public ResultSet getBook() {
+    public ResultSet getCargoForAdmin() {
         ResultSet resSet = null;
-        String select = "SELECT client.fullname, cargo.number_cargo, cargo.weight, cargo.size, cargo.city_from, " +
-                "cargo.city_to, cargo.price from client " +
-                "INNER JOIN cargo ON client.id_client = cargo.id_client " +
-                "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
-                "WHERE book_delivery.status = 'Создан'";
+        String select = "SELECT cargo.id_client, cargo.number_cargo, cargo.description, cargo.length ,cargo.width, " +
+                                "cargo.height, cargo.size, cargo.weight, cargo.price, package.name, c1.name, c2.name, " +
+                                "book_delivery.transport, book_delivery.id_personal, book_delivery.time_delivery, " +
+                                "book_delivery.status, book_delivery.sent, book_delivery.delivered " +
+                        "FROM cargo " +
+                        "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
+                        "INNER JOIN transport ON book_delivery.transport = transport.state " +
+                        "INNER JOIN package ON cargo.id_package = package.id_package " +
+                        "INNER JOIN rate AS r ON cargo.rate = r.id " +
+                        "INNER JOIN city AS c1 ON r.city_from = c1.id_city " +
+                        "INNER JOIN city AS c2 On r.city_to = c2.id_city ";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
@@ -428,9 +434,12 @@ public class DatabaseHandler {
         return resSet;
     }
 
-    public ResultSet getClient() {
+    public ResultSet getClientForAdmin() {
         ResultSet resSet = null;
-        String select = "SELECT id_client, fullname, city, phone FROM client";
+        String select = "SELECT client.id_client, client.fullname, client.birthday, client.phone, client.password, client.date_doc, " +
+                "               client.number_doc, city.name " +
+                "        FROM client " +
+                "        INNER JOIN city ON client.city = city.id_city";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
@@ -440,19 +449,6 @@ public class DatabaseHandler {
         return resSet;
     }
 
-    public ResultSet getCargoTwo() {
-        ResultSet resSet = null;
-        String select = "SELECT client.id_client, cargo.number_cargo, cargo.city_from, cargo.city_to, book_delivery.sent FROM client " +
-                "INNER JOIN cargo ON client.id_client = cargo.id_client " +
-                "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo";
-        try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
-            resSet = prSt.executeQuery();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return resSet;
-    }
 
     public ResultSet getCar(ForCar forCar) {
         ResultSet resSet = null;

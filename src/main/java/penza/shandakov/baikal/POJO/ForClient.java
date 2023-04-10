@@ -17,6 +17,7 @@ public class ForClient {
     private String cityTo;
 
 
+
     public String getCityFrom() {
         return cityFrom;
     }
@@ -153,6 +154,17 @@ public class ForClient {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ForClient(String id, String fullName, String birthday, String phone, String password, String numberDoc, String dateDoc, String city) {
+        this.phone = phone;
+        this.password = password;
+        this.city = city;
+        this.numberDoc = numberDoc;
+        this.dateDoc = dateDoc;
+        this.birthday = birthday;
+        this.id = id;
+        this.fullName = fullName;
     }
 }
 
