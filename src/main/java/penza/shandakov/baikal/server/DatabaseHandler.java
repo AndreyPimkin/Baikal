@@ -419,20 +419,6 @@ public class DatabaseHandler {
         }
     }
 
-    public ResultSet getDelivery() {
-        ResultSet resSet = null;
-        String select = "SELECT cargo.number_cargo, cargo.weight, cargo.size, cargo.city_from, " +
-                "cargo.city_to from cargo " +
-                "INNER JOIN book_delivery ON cargo.number_cargo = book_delivery.number_cargo " +
-                "WHERE book_delivery.status = 'Сформирован' AND  id_personal = " + AuthorizationController.idPerson;
-        try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
-            resSet = prSt.executeQuery();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return resSet;
-    }
 
     public ResultSet getClientForAdmin() {
         ResultSet resSet = null;
@@ -466,7 +452,10 @@ public class DatabaseHandler {
 
     public ResultSet getPerson() {
         ResultSet resSet = null;
-        String select = "SELECT * FROM personal";
+        String select = "SELECT personal.id_personal, personal.fullname, personal.birthday, personal.role, " +
+                "personal.phone, personal.password, personal.date_doc, personal.number_doc, personal.experience, city.name " +
+                "FROM personal " +
+                "INNER JOIN city ON personal.city = city.id_city";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
@@ -495,7 +484,7 @@ public class DatabaseHandler {
 */
 
     public void addPerson(ForClient forClient) throws ClassNotFoundException {
-        String insert = "INSERT INTO personal VALUES(?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
+        String insert = "INSERT INTO personal VALUES(?, ?, ?, ?, ?, ?, ?, ? ,(SELECT id_City FROM city WHERE name = ?) ,?)";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forClient.getId());
@@ -507,7 +496,7 @@ public class DatabaseHandler {
             prSt.setString(7, forClient.getDateDoc());
             prSt.setString(8, forClient.getNumberDoc());
             prSt.setString(9, forClient.getCity());
-            prSt.setString(10, forClient.getPatronymic());
+            prSt.setString(10,forClient.getExperience());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -528,7 +517,7 @@ public class DatabaseHandler {
 */
 
     public void deletePerson(ForClient forClient) throws ClassNotFoundException {
-        String insert = "DELETE FROM  personal WHERE id_personal = ?";
+        String insert = "DELETE FROM personal WHERE id_personal = ?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forClient.getId());

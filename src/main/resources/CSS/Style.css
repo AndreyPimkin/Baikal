@@ -59,7 +59,9 @@
     -fx-scale-y: 1;
     -fx-scale-x: 1;
 }
-
+.dateDoc{
+    -fx-font-size: 16;
+}
 
 .imageC:hover{
     -fx-scale-y: 1.05;

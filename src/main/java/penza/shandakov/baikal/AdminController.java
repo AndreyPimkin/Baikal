@@ -3,18 +3,14 @@ package penza.shandakov.baikal;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import penza.shandakov.baikal.POJO.ForClient;
 import penza.shandakov.baikal.POJO.ForLogistician;
@@ -50,7 +46,7 @@ public class AdminController {
     private Button addTransport;
 
     @FXML
-    private TableColumn<?, ?> birthday;
+    private TableColumn<ForClient, String> birthday;
 
     @FXML
     private TableColumn<ForClient, String> birthdayClient;
@@ -59,7 +55,7 @@ public class AdminController {
     private DatePicker birthdayPersonAdd;
 
     @FXML
-    private ComboBox<?> boxCity;
+    private ComboBox<String> boxCity;
 
     @FXML
     private ComboBox<?> boxCityFrom;
@@ -68,19 +64,19 @@ public class AdminController {
     private ComboBox<?> boxCityTo;
 
     @FXML
-    private ComboBox<?> boxRole;
+    private ComboBox<String> boxRole;
 
     @FXML
     private TableColumn<ForClient, String> cityClient;
 
     @FXML
-    private TableColumn<?, ?> cityPerson;
+    private TableColumn<ForClient, String> cityPerson;
 
     @FXML
-    private TableColumn<?, ?> dateDocPerson;
+    private TableColumn<ForClient, String> dateDocPerson;
 
     @FXML
-    private DatePicker datePas;
+    private DatePicker dateDocPersonAdd;
 
     @FXML
     private Button delete;
@@ -110,7 +106,7 @@ public class AdminController {
     private TableColumn<ForClient, String> passwordClient;
 
     @FXML
-    private TableColumn<?, ?> experience;
+    private TableColumn<ForClient, String> experience;
 
     @FXML
     private TextField experienceAdd;
@@ -125,7 +121,7 @@ public class AdminController {
     private TableColumn<ForClient, String> fullNameClient;
 
     @FXML
-    private TableColumn<?, ?> fullNamePerson;
+    private TableColumn<ForClient, String> fullNamePerson;
 
     @FXML
     private TextField fullNamePersonAdd;
@@ -137,7 +133,7 @@ public class AdminController {
     private TableColumn<ForLogistician, String> idClientCargo;
 
     @FXML
-    private TableColumn<?, ?> idPerson;
+    private TableColumn<ForClient, String> idPerson;
 
     @FXML
     private TextField idPersonAdd;
@@ -176,13 +172,16 @@ public class AdminController {
     private TableColumn<ForClient, String> numberClient;
 
     @FXML
-    private TableColumn<?, ?> numberDocPerson;
+    private TableColumn<ForClient, String> numberDocPerson;
 
     @FXML
-    private TextField numberPas;
+    private TextField numberDocPersonAdd;
 
     @FXML
-    private TableColumn<?, ?> numberPerson;
+    private TableColumn<ForClient, String> numberPerson;
+
+    @FXML
+    private Label errorInput;
 
     @FXML
     private TextField numberPersonAdd;
@@ -197,7 +196,7 @@ public class AdminController {
     private TableColumn<ForClient, String> packing;
 
     @FXML
-    private TableColumn<?, ?> password;
+    private TableColumn<ForClient, String> password;
 
     @FXML
     private TextField passwordPersonAdd;
@@ -212,7 +211,7 @@ public class AdminController {
     private TableColumn<ForClient, String> proportions;
 
     @FXML
-    private TableColumn<?, ?> role;
+    private TableColumn<ForClient, String> role;
 
     @FXML
     private TableColumn<ForClient, String> sent;
@@ -242,7 +241,7 @@ public class AdminController {
     private TableView<?> tablePackage;
 
     @FXML
-    private TableView<?> tablePerson;
+    private TableView<ForClient> tablePerson;
 
     @FXML
     private TableView<?> tableRate;
@@ -269,6 +268,14 @@ public class AdminController {
 
     private final ObservableList<ForClient> clientList = FXCollections.observableArrayList();
     private final ObservableList<ForLogistician> cargoList = FXCollections.observableArrayList();
+
+    private final ObservableList<ForClient> personList = FXCollections.observableArrayList();
+
+    private final String[] listRole = new String[]{"Логист", "Водитель", "Админ"};
+    private String selectedRole = "";
+    private String selectCity = "";
+
+    ForClient selectClient;
 
 
     @FXML
@@ -317,6 +324,195 @@ public class AdminController {
         tableCargo.setItems(cargoList);
 
 
+        //Работники
+        tablePerson.setVisible(true);
+        addPerson.setDisable(true);
+        idPersonAdd.setVisible(false);
+        fullNamePersonAdd.setVisible(false);
+        birthdayPersonAdd.setVisible(false);
+        boxRole.setVisible(false);
+        numberPersonAdd.setVisible(false);
+        passwordPersonAdd.setVisible(false);
+        numberDocPersonAdd.setVisible(false);
+        dateDocPersonAdd.setVisible(false);
+        experienceAdd.setVisible(false);
+        boxCity.setVisible(false);
+        errorInput.setVisible(false);
+
+        isAcc.setOnAction(actionEvent -> {
+            errorInput.setVisible(false);
+            if (!(isAcc.isSelected())) {
+                isAcc.setText("Добавить");
+                tablePerson.setVisible(true);
+                addPerson.setDisable(true);
+                idPersonAdd.setVisible(false);
+                fullNamePersonAdd.setVisible(false);
+                birthdayPersonAdd.setVisible(false);
+                boxRole.setVisible(false);
+                numberPersonAdd.setVisible(false);
+                passwordPersonAdd.setVisible(false);
+                numberDocPersonAdd.setVisible(false);
+                dateDocPersonAdd.setVisible(false);
+                experienceAdd.setVisible(false);
+                boxCity.setVisible(false);
+
+            }
+            else {
+                isAcc.setText("Таблица");
+                tablePerson.setVisible(false);
+                addPerson.setDisable(false);
+                idPersonAdd.setVisible(true);
+                fullNamePersonAdd.setVisible(true);
+                birthdayPersonAdd.setVisible(true);
+                boxRole.setVisible(true);
+                numberPersonAdd.setVisible(true);
+                passwordPersonAdd.setVisible(true);
+                numberDocPersonAdd.setVisible(true);
+                dateDocPersonAdd.setVisible(true);
+                experienceAdd.setVisible(true);
+                boxCity.setVisible(true);
+            }
+        });
+
+        boxRole.getItems().addAll(this.listRole);
+        boxRole.setOnAction(this::getRole);
+        boxCity.setOnAction(this::getCity);
+
+        try {
+            initCity();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            initPerson();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        addPerson.setOnAction(actionEvent -> {
+            errorInput.setVisible(false);
+            if(idPersonAdd.getText().equals("")){
+                errorInput.setText("Введите ID");
+                errorInput.setVisible(true);
+            }
+            else if(fullNamePersonAdd.getText().equals("")){
+                errorInput.setText("Введите ФИО");
+                errorInput.setVisible(true);
+            }
+            else if(birthdayPersonAdd.getValue() == null){
+                errorInput.setText("Выберите дату рождения");
+                errorInput.setVisible(true);
+            }
+            else if(selectedRole.equals("")){
+                errorInput.setText("Выберите роль");
+                errorInput.setVisible(true);
+            }
+            else if(numberPersonAdd.getText().equals("")){
+                errorInput.setText("Введите телефон");
+                errorInput.setVisible(true);
+            }
+
+            else  if (numberPersonAdd.getText().matches("^8\\d{10}$")){
+                errorInput.setText("Неверный телефон");
+                errorInput.setVisible(true);
+            }
+
+            else if(passwordPersonAdd.getText().equals("")){
+                errorInput.setText("Введите пароль");
+                errorInput.setVisible(true);
+            }
+            else if(numberDocPersonAdd.getText().equals("")){
+                errorInput.setText("Введите номер и серию");
+                errorInput.setVisible(true);
+            }
+
+            else if(dateDocPersonAdd.getValue() == null){
+                errorInput.setText("Выберите дату выдачи");
+                errorInput.setVisible(true);
+            }
+            else if(experienceAdd.getText().equals("")){
+                errorInput.setText("Введите стаж");
+                errorInput.setVisible(true);
+            }
+
+            else if(selectCity.equals("")){
+                errorInput.setText("Выберите город");
+                errorInput.setVisible(true);
+            }
+            else{
+                ForClient forClient = new ForClient();
+                forClient.setId(idPersonAdd.getText());
+                forClient.setFullName(fullNamePersonAdd.getText());
+                forClient.setBirthday(String.valueOf(birthdayPersonAdd.getValue()));
+                forClient.setRole(selectedRole);
+                forClient.setPhone(numberPersonAdd.getText());
+                forClient.setPassword(AuthorizationController.getMd5(passwordPersonAdd.getText()));
+                forClient.setNumberDoc(numberDocPersonAdd.getText());
+                forClient.setDateDoc(String.valueOf(dateDocPersonAdd.getValue()));
+                forClient.setExperience((experienceAdd.getText()));
+                forClient.setCity(selectCity);
+                try {
+                    dbHandler.addPerson(forClient);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                errorInput.setText("Работник " + idPersonAdd.getText() + " добавлен");
+                errorInput.setVisible(true);
+                refreshTablePersonal();
+            }
+        });
+
+        deletePerson.setOnAction(actionEvent -> {
+            if (!(isAcc.isSelected())) {
+                if(tablePerson.getSelectionModel().getSelectedItem() == null){
+                    errorInput.setVisible(true);
+                    errorInput.setText("Выберите работника");
+                }
+                else{
+                    selectClient = tableClient.getSelectionModel().getSelectedItem();
+                    ForClient forClient = new ForClient();
+                    forClient.setId(selectClient.getId());
+                    try {
+                        dbHandler.deletePerson(forClient);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }
+            else {
+                if(idPersonAdd.getText().equals("")){
+                    errorInput.setVisible(true);
+                    errorInput.setText("Введите ID");
+                }
+                else{
+                    ForClient forClient = new ForClient();
+                    forClient.setId(idPersonAdd.getText());
+                    try {
+                        dbHandler.deletePerson(forClient);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+
+        idPerson.setCellValueFactory(new PropertyValueFactory<>("id"));
+        fullNamePerson.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        birthday.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        role.setCellValueFactory(new PropertyValueFactory<>("role"));
+        numberPerson.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        password.setCellValueFactory(new PropertyValueFactory<>("password"));
+        dateDocPerson.setCellValueFactory(new PropertyValueFactory<>("dateDoc"));
+        numberDocPerson.setCellValueFactory(new PropertyValueFactory<>("numberDoc"));
+        cityPerson.setCellValueFactory(new PropertyValueFactory<>("city"));
+        experience.setCellValueFactory(new PropertyValueFactory<>("experience"));
+        tablePerson.setItems(personList);
+
+
 
     }
 
@@ -345,6 +541,58 @@ public class AdminController {
                     rs.getString(11), rs.getString(12), rs.getString(13), rs.getInt(14),
                     rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18)));
         }
+    }
+
+    private void initCity() throws SQLException {
+        ResultSet rs;
+        rs = dbHandler.getCity();
+        while (true) {
+            assert rs != null;
+            if (!rs.next()) break;
+            boxCity.getItems().addAll(rs.getString(1));
+        }
+    }
+
+    private void initPerson() throws SQLException {
+        dbHandler = new DatabaseHandler();
+        ResultSet rs;
+        rs = dbHandler.getPerson();
+        while (true) {
+            assert rs != null;
+            if (!rs.next()) break;
+            personList.add(new ForClient(rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
+                    rs.getString(8), rs.getString(9), rs.getString(10)));
+        }
+    }
+
+
+    private void getRole(ActionEvent actionEvent) {
+        selectedRole = boxRole.getValue();
+    }
+
+    private void getCity(ActionEvent actionEvent) {
+        selectCity = boxCity.getValue();
+    }
+
+    private void refreshTablePersonal() {
+        tablePerson.getItems().clear();
+        try {
+            initPerson();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        idPerson.setCellValueFactory(new PropertyValueFactory<>("id"));
+        fullNamePerson.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        birthday.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        role.setCellValueFactory(new PropertyValueFactory<>("role"));
+        numberPerson.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        password.setCellValueFactory(new PropertyValueFactory<>("password"));
+        dateDocPerson.setCellValueFactory(new PropertyValueFactory<>("dateDoc"));
+        numberDocPerson.setCellValueFactory(new PropertyValueFactory<>("numberDoc"));
+        cityPerson.setCellValueFactory(new PropertyValueFactory<>("city"));
+        experience.setCellValueFactory(new PropertyValueFactory<>("experience"));
+        tablePerson.setItems(personList);
     }
 
 

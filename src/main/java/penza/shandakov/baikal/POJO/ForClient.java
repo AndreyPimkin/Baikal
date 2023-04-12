@@ -35,6 +35,7 @@ public class ForClient {
     }
 
     private String role;
+    private String experience;
 
     public ForClient(String id, String fullName, String city, String phone) {
         this.id = id;
@@ -43,21 +44,18 @@ public class ForClient {
         this.phone = phone;
     }
 
-    public ForClient(String id, String fullName, String birthday, String role, String phone, String password, String dateDoc, String numberDoc, String city, String patronymic) {
-        this.phone = phone;
-        this.password = password;
-        this.patronymic = patronymic;
-        this.city = city;
-        this.numberDoc = numberDoc;
-        this.dateDoc = dateDoc;
-        this.birthday = birthday;
-        this.id = id;
-        this.fullName = fullName;
-        this.role = role;
-    }
+
 
     public ForClient() {
 
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 
     public String getRole() {
@@ -166,5 +164,19 @@ public class ForClient {
         this.id = id;
         this.fullName = fullName;
     }
+
+    public ForClient(String id, String fullName, String birthday, String role, String phone, String password, String dateDoc, String numberDoc, String experience ,String city) {
+        this.password = password;
+        this.phone = phone;
+        this.city = city;
+        this.numberDoc = numberDoc;
+        this.dateDoc = dateDoc;
+        this.birthday = birthday;
+        this.id = id;
+        this.fullName = fullName;
+        this.role = role;
+        this.experience = experience;
+    }
+
 }
 
