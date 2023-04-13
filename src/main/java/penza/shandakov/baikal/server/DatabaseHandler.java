@@ -466,22 +466,21 @@ public class DatabaseHandler {
     }
 
 
-/*
+
     public void addCar(ForCar forCar) throws ClassNotFoundException {
         String insert = "INSERT INTO transport VALUES(?, ?, ?, ?, ?)";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
-            prSt.setString(1, forCar.getNumber());
+            prSt.setString(1, forCar.getState());
             prSt.setString(2, forCar.getModel());
             prSt.setString(3, forCar.getStatus());
-            prSt.setString(4, forCar.getVin());
-            prSt.setString(5, forCar.getLoad());
+            prSt.setFloat(4, forCar.getLoad_capacity());
+            prSt.setFloat(5, forCar.getSize());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-*/
 
     public void addPerson(ForClient forClient) throws ClassNotFoundException {
         String insert = "INSERT INTO personal VALUES(?, ?, ?, ?, ?, ?, ?, ? ,(SELECT id_City FROM city WHERE name = ?) ,?)";
@@ -503,18 +502,17 @@ public class DatabaseHandler {
         }
     }
 
-/*
     public void deleteCar(ForCar forCar) throws ClassNotFoundException {
         String insert = "DELETE FROM transport WHERE state = ?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
-            prSt.setString(1, forCar.getNumber());
+            prSt.setString(1, forCar.getState());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-*/
+
 
     public void deletePerson(ForClient forClient) throws ClassNotFoundException {
         String insert = "DELETE FROM personal WHERE id_personal = ?";

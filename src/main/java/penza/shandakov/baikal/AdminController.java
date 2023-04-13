@@ -3,7 +3,6 @@ package penza.shandakov.baikal;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -12,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import penza.shandakov.baikal.POJO.ForCar;
 import penza.shandakov.baikal.POJO.ForClient;
 import penza.shandakov.baikal.POJO.ForLogistician;
 import penza.shandakov.baikal.server.DatabaseHandler;
@@ -148,7 +148,7 @@ public class AdminController {
     private RadioButton isPack;
 
     @FXML
-    private TableColumn<?, ?> loadCapacityTransport;
+    private TableColumn<ForCar, Float> loadCapacityTransport;
 
     @FXML
     private TextField loadCapacityTransportAdd;
@@ -157,7 +157,7 @@ public class AdminController {
     private TableColumn<ForClient, Integer> driver;
 
     @FXML
-    private TableColumn<?, ?> modelTransport;
+    private TableColumn<ForCar, String> modelTransport;
 
     @FXML
     private TextField modelTransportAdd;
@@ -184,13 +184,16 @@ public class AdminController {
     private Label errorInput;
 
     @FXML
+    private Label errorInputTwo;
+
+    @FXML
     private TextField numberPersonAdd;
 
     @FXML
     private TextField numberTransportAdd;
 
     @FXML
-    private TableColumn<?, ?> numberTransport;
+    private TableColumn<ForCar, String> numberTransport;
 
     @FXML
     private TableColumn<ForClient, String> packing;
@@ -220,7 +223,7 @@ public class AdminController {
     private TableColumn<ForClient, Float> size;
 
     @FXML
-    private TableColumn<?, ?> sizeTransport;
+    private TableColumn<ForCar, Float> sizeTransport;
 
     @FXML
     private TextField sizeTransportAdd;
@@ -229,7 +232,7 @@ public class AdminController {
     private TableColumn<ForClient, String> status;
 
     @FXML
-    private TableColumn<?, ?> statusTransport;
+    private TableColumn<ForCar, String> statusTransport;
 
     @FXML
     private TableView<ForLogistician> tableCargo;
@@ -247,7 +250,7 @@ public class AdminController {
     private TableView<?> tableRate;
 
     @FXML
-    private TableView<?> tableTransport;
+    private TableView<ForCar> tableTransport;
 
     @FXML
     private TableColumn<ForClient, String> timeDelivery;
@@ -268,14 +271,16 @@ public class AdminController {
 
     private final ObservableList<ForClient> clientList = FXCollections.observableArrayList();
     private final ObservableList<ForLogistician> cargoList = FXCollections.observableArrayList();
-
     private final ObservableList<ForClient> personList = FXCollections.observableArrayList();
+
+    private final ObservableList<ForCar> carList = FXCollections.observableArrayList();
 
     private final String[] listRole = new String[]{"Логист", "Водитель", "Админ"};
     private String selectedRole = "";
     private String selectCity = "";
 
     ForClient selectClient;
+    ForCar selectCar;
 
 
     @FXML
@@ -479,6 +484,7 @@ public class AdminController {
                     } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
+                    refreshTablePersonal();
                 }
 
             }
@@ -495,6 +501,7 @@ public class AdminController {
                     } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
+                    refreshTablePersonal();
                 }
             }
         });
@@ -512,7 +519,85 @@ public class AdminController {
         experience.setCellValueFactory(new PropertyValueFactory<>("experience"));
         tablePerson.setItems(personList);
 
+        // Транспорт
 
+        try {
+            initTransport();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        numberTransport.setCellValueFactory(new PropertyValueFactory<>("state"));
+        modelTransport.setCellValueFactory(new PropertyValueFactory<>("model"));
+        statusTransport.setCellValueFactory(new PropertyValueFactory<>("status"));
+        loadCapacityTransport.setCellValueFactory(new PropertyValueFactory<>("load_capacity"));
+        sizeTransport.setCellValueFactory(new PropertyValueFactory<>("size"));
+        tableTransport.setItems(carList);
+
+        errorInputTwo.setVisible(false);
+        addTransport.setOnAction(actionEvent -> {
+            errorInputTwo.setVisible(false);
+            if(numberTransportAdd.getText().equals("")){
+                errorInputTwo.setText("Введите номер");
+                errorInputTwo.setVisible(true);
+            }
+            else if(statusTransport.getText().equals("")){
+                errorInputTwo.setText("Введите объем");
+                errorInputTwo.setVisible(true);
+            }
+            else if(modelTransportAdd.getText().equals("")){
+                errorInputTwo.setText("Введите модель");
+                errorInputTwo.setVisible(true);
+            }
+            else if(sizeTransportAdd.getText().equals("")){
+                errorInputTwo.setText("Введите грузоподъемность");
+                errorInputTwo.setVisible(true);
+            }
+            else{
+                ForCar forCar =  new ForCar();
+                forCar.setState(numberTransportAdd.getText());
+                forCar.setModel(errorInputTwo.getText());
+                forCar.setStatus(modelTransportAdd.getText());
+                forCar.setLoad_capacity(Float.valueOf(modelTransportAdd.getText()));
+                forCar.setSize(Float.valueOf(sizeTransportAdd.getText()));
+                try {
+                    dbHandler.addCar(forCar);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                errorInputTwo.setText("Машина " + numberTransportAdd.getText() + " добавлена" );
+                errorInputTwo.setVisible(true);
+                refreshTableCar();
+            }
+
+        });
+
+        deleteTransport.setOnAction(actionEvent -> {
+            if (tableTransport.getSelectionModel().getSelectedItem() != null) {
+                ForCar forCar =  new ForCar();
+                selectCar = tableTransport.getSelectionModel().getSelectedItem();
+                forCar.setState(selectCar.getState());
+                try {
+                    dbHandler.deleteCar(forCar);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                refreshTableCar();
+            }
+            else if (!numberTransportAdd.getText().equals("")){
+                ForCar forCar =  new ForCar();
+                forCar.setState(numberTransportAdd.getText());
+                try {
+                    dbHandler.deleteCar(forCar);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                refreshTableCar();
+            }
+            else{
+                errorInputTwo.setText("Выберите транспорт");
+                errorInputTwo.setVisible(true);
+            }
+        });
 
     }
 
@@ -566,6 +651,19 @@ public class AdminController {
         }
     }
 
+    private void initTransport() throws SQLException {
+        dbHandler = new DatabaseHandler();
+        ResultSet rs;
+        rs = dbHandler.getTransport();
+        while (true) {
+            assert rs != null;
+            if (!rs.next()) break;
+            carList.add(new ForCar(rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getFloat(4), rs.getFloat(5)));
+        }
+    }
+
+
 
     private void getRole(ActionEvent actionEvent) {
         selectedRole = boxRole.getValue();
@@ -594,6 +692,22 @@ public class AdminController {
         experience.setCellValueFactory(new PropertyValueFactory<>("experience"));
         tablePerson.setItems(personList);
     }
+
+    private void refreshTableCar() {
+        tableTransport.getItems().clear();
+        try {
+            initTransport();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        numberTransport.setCellValueFactory(new PropertyValueFactory<>("state"));
+        modelTransport.setCellValueFactory(new PropertyValueFactory<>("model"));
+        statusTransport.setCellValueFactory(new PropertyValueFactory<>("status"));
+        loadCapacityTransport.setCellValueFactory(new PropertyValueFactory<>("load_capacity"));
+        sizeTransport.setCellValueFactory(new PropertyValueFactory<>("size"));
+        tableTransport.setItems(carList);
+    }
+
 
 
 
