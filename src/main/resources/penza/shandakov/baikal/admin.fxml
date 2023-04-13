@@ -182,6 +182,11 @@
                         <Font name="Century" size="16.0" />
                      </font>
                   </Button>
+                  <Label fx:id="errorInputTwo" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="339.0" prefHeight="15.0" prefWidth="250.0" text="Ошибка" textFill="RED">
+                     <font>
+                        <Font name="Century" size="11.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </content>
