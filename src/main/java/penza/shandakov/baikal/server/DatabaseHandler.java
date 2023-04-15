@@ -1,10 +1,7 @@
 package penza.shandakov.baikal.server;
 
 import penza.shandakov.baikal.AuthorizationController;
-import penza.shandakov.baikal.POJO.ForCar;
-import penza.shandakov.baikal.POJO.ForCargo;
-import penza.shandakov.baikal.POJO.ForClient;
-import penza.shandakov.baikal.POJO.ForLogistician;
+import penza.shandakov.baikal.POJO.*;
 
 import java.sql.*;
 
@@ -450,6 +447,33 @@ public class DatabaseHandler {
         return resSet;
     }
 
+    public ResultSet getPacking() {
+        ResultSet resSet = null;
+        String select = "SELECT * FROM package";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
+    public ResultSet getRate() {
+        ResultSet resSet = null;
+        String select = "SELECT rate.id, c1.name, c2.name, rate.distance " +
+                "FROM rate " +
+                "INNER JOIN city AS c1 ON rate.city_from = c1.id_city " +
+                "INNER JOIN city AS c2 On rate.city_to = c2.id_city ";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resSet;
+    }
+
     public ResultSet getPerson() {
         ResultSet resSet = null;
         String select = "SELECT personal.id_personal, personal.fullname, personal.birthday, personal.role, " +
@@ -481,6 +505,59 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+
+    public void addPacking(ForAdmin forAdmin) throws ClassNotFoundException {
+        String insert = "INSERT INTO package VALUES(?, ?)";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getNamePacking());
+            prSt.setString(2, forAdmin.getPricePacking());
+
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addRate(ForAdmin forAdmin) throws ClassNotFoundException {
+        String insert = "INSERT INTO rate VALUES((SELECT id_City FROM city WHERE name = ?),(SELECT id_City FROM city WHERE name = ?) , ?)";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getFromCityRate());
+            prSt.setString(2, forAdmin.getToCityRate());
+            prSt.setString(3, forAdmin.getDistanceRate());
+
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePacking(ForAdmin forAdmin) throws ClassNotFoundException {
+        String insert = "DELETE FROM package WHERE id_package = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getIDPacking());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteRate(ForAdmin forAdmin) throws ClassNotFoundException {
+        String insert = "DELETE FROM rate WHERE id = ?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+            prSt.setString(1, forAdmin.getIdRate());
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     public void addPerson(ForClient forClient) throws ClassNotFoundException {
         String insert = "INSERT INTO personal VALUES(?, ?, ?, ?, ?, ?, ?, ? ,(SELECT id_City FROM city WHERE name = ?) ,?)";

@@ -217,12 +217,12 @@
                         <Font name="Century" size="16.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="addPricePacking" layoutX="25.0" layoutY="272.0" prefHeight="35.0" prefWidth="134.0" promptText="Цена" style="-fx-border-color: #19b2e6; visibility: false;">
+                  <TextField fx:id="addPricePacking" layoutX="25.0" layoutY="250.0" prefHeight="35.0" prefWidth="134.0" promptText="Цена" style="-fx-border-color: #19b2e6; visibility: false;">
                      <font>
                         <Font name="Century" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="addNamePacking" layoutX="194.0" layoutY="272.0" prefHeight="35.0" prefWidth="385.0" promptText="Название" style="-fx-border-color: #19b2e6; visibility: false;">
+                  <TextField fx:id="addNamePacking" layoutX="194.0" layoutY="250.0" prefHeight="35.0" prefWidth="385.0" promptText="Название" style="-fx-border-color: #19b2e6; visibility: false;">
                      <font>
                         <Font name="Century" size="16.0" />
                      </font>
@@ -231,17 +231,22 @@
                      <columns>
                         <TableColumn fx:id="idRate" prefWidth="75.0" text="ID" />
                         <TableColumn fx:id="fromCityRate" prefWidth="149.0" text="Откуда" />
-                        <TableColumn fx:id="toCityTo" prefWidth="162.0" text="Куда" />
+                        <TableColumn fx:id="toCityRate" prefWidth="162.0" text="Куда" />
                         <TableColumn fx:id="distanceRate" prefWidth="250.0" text="Дистанция" />
                      </columns>
                   </TableView>
-                  <ComboBox fx:id="boxCityFrom" layoutX="25.0" layoutY="264.0" prefHeight="35.0" prefWidth="185.0" promptText="Откуда" style="-fx-border-color: #19b2e6; -fx-background-color: none;" styleClass="city" />
-                  <ComboBox fx:id="boxCityTo" layoutX="222.0" layoutY="264.0" prefHeight="35.0" prefWidth="185.0" promptText="Куда" style="-fx-border-color: #19b2e6; -fx-background-color: none;" styleClass="city" />
-                  <TextField fx:id="addDistance" layoutX="428.0" layoutY="264.0" prefHeight="35.0" prefWidth="227.0" promptText="Дистанция" style="-fx-border-color: #19b2e6;">
+                  <ComboBox fx:id="boxCityFrom" layoutX="25.0" layoutY="250.0" prefHeight="35.0" prefWidth="185.0" promptText="Откуда" style="-fx-border-color: #19b2e6; -fx-background-color: none;" styleClass="city" />
+                  <ComboBox fx:id="boxCityTo" layoutX="222.0" layoutY="250.0" prefHeight="35.0" prefWidth="185.0" promptText="Куда" style="-fx-border-color: #19b2e6; -fx-background-color: none;" styleClass="city" />
+                  <TextField fx:id="addDistance" layoutX="428.0" layoutY="250.0" prefHeight="35.0" prefWidth="227.0" promptText="Дистанция" style="-fx-border-color: #19b2e6;">
                      <font>
                         <Font name="Century" size="16.0" />
                      </font>
                   </TextField>
+                  <Label fx:id="errorInputThree" alignment="CENTER" contentDisplay="CENTER" layoutX="224.0" layoutY="295.0" prefHeight="15.0" prefWidth="260.0" text="Ошибка" textFill="RED">
+                     <font>
+                        <Font name="Century" size="11.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </content>
