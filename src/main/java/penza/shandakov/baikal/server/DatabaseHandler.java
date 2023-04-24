@@ -86,15 +86,14 @@ public class DatabaseHandler {
     public void updateClient(ForClient forClient) throws SQLException, ClassNotFoundException {
         String insert = "UPDATE client SET " +
                 "fullname = (? + ' ' + ?), " +
-                "birthday = ?, " +
-                "city = ? WHERE id_client = ?";
+                "birthday = ? " +
+                "WHERE id_client = ?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
             prSt.setString(1, forClient.getSurname());
             prSt.setString(2, forClient.getName());
-            prSt.setString(3, forClient.getPatronymic());
-            prSt.setString(4, forClient.getBirthday());
-            prSt.setString(5, forClient.getId());
+            prSt.setString(3, forClient.getBirthday());
+            prSt.setString(4, forClient.getId());
             prSt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

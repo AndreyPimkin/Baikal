@@ -138,7 +138,7 @@ public class TrackingController {
                             dateAndCityFromSent.setText(resultCargo.getString(10) + ", " + resultCargo.getString(11));
                             dateAndCityFromSent.setVisible(true);
                         }
-                        if (!resultCargo.getString(13).equals("")) {
+                        if (resultCargo.getString(13) != null) {
                             toSent.setVisible(true);
                             dateAndCityToSent.setText(resultCargo.getString(12) + ", " + resultCargo.getString(13));
                             dateAndCityToSent.setVisible(true);

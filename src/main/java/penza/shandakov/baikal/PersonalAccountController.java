@@ -302,11 +302,11 @@ public class PersonalAccountController {
                                 checkInfo = true;
                                 textTwo.setVisible(true);
                                 if (dateTime.getHour() <= 11 && dateTime.getHour() >= 6)
-                                    textTwo.setText("Доброе утро, " + nameClient);
+                                    textTwo.setText("Доброе утро, " + name);
                                 else if (dateTime.getHour() > 11 && dateTime.getHour() <= 18) {
-                                    textTwo.setText("Добрый день, " + nameClient);
+                                    textTwo.setText("Добрый день, " + name);
                                 } else if (dateTime.getHour() > 18) {
-                                    textTwo.setText("Добрый вечер, " + nameClient);
+                                    textTwo.setText("Добрый вечер, " + name);
                                 }
 
                                 surnameInput.setVisible(true);
